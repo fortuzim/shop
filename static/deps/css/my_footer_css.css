@@ -1,0 +1,89 @@
+
+.main-content {
+  flex: 1; /* Основное содержимое занимает оставшееся пространство */
+  padding-bottom: 60px; /* Отступ снизу, чтобы футер не перекрывал контент */
+}
+
+footer {
+  width: 100%;
+  background-color: #1a1816;
+  padding: 10px 0;
+  position: relative; /* Меняем на relative */
+  z-index: 10;
+}
+
+/* Контейнер футера */
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Стили для секций футера */
+.footer-section {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px; /* Округленные углы для секций */
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-section h4 {
+  color: #ffffff; /* Белый цвет для заголовков */
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.footer-section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #b0b0b0; /* Более светлый серый для ссылок */
+  transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #ff7e00; /* Теплый оранжевый при наведении */
+}
+
+/* Стили для информации о компании */
+.company-info {
+  flex: 2;
+  max-width: 400px;
+}
+
+.company-info p {
+  margin: 5px 0;
+  color: #b0b0b0; /* Более светлый серый для текста */
+}
+
+.company-info a {
+  color: #ff7e00; /* Теплый оранжевый */
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.company-info a:hover {
+  color: #e06e00; /* Более темный оранжевый при наведении */
+}
+
+/* Нижняя часть футера */
+.footer-bottom {
+  text-align: center;
+  padding: 15px 0;
+  background-color: #1a1816; /* Темный фон */
+  color: #b0b0b0; /* Более светлый серый для текста */
+  font-size: 14px;
+}

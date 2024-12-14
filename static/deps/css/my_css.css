@@ -1,0 +1,122 @@
+header .container {
+  max-width: 1200px; /* Увеличьте максимальную ширину контейнера */
+  padding: 7px 0;
+  font-size: 18px; /* Размер шрифта текста */
+  font-family: 'Roboto', sans-serif; /* Используем современный шрифт */
+  color: #fff;
+}
+
+.contact-info {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, rgba(30, 30, 30, 0.8), rgba(60, 60, 60, 0.8))!important; 
+  color: #fff;
+  font-size: 16px; /* Чуть меньший шрифт для компактности */
+  letter-spacing: 1px; /* Лёгкое увеличение межбуквенного расстояния */
+}
+
+.contact-info * {
+  color: #fff !important; 
+}
+
+.left, .right {
+  display: flex;
+  align-items: center;
+}
+
+.left a {
+  margin-right: 15px;
+  text-decoration: none;
+  color: #ff6347; /* Добавлен цветовой акцент для ссылок */
+  font-weight: 500; /* Полужирный текст для выделения */
+  transition: color 0.3s ease; /* Плавный переход цвета при наведении */
+}
+
+.left a:hover {
+  color: #ffffff; /* Цвет текста при наведении */
+}
+
+.phone-number {
+  margin-right: 20px;
+  font-weight: bold; /* Более жирный текст для номера телефона */
+  font-size: 18px; /* Увеличен размер шрифта */
+}
+
+.social-icons {
+  display: flex;
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.social-icon i {
+  font-size: 24px; /* Размер иконки */
+  color: #fff; /* Белый цвет иконок для контраста */
+}
+
+.dropdown-toggle::after {
+  content: none;
+}
+
+.custom-shadow {
+  box-shadow: 5px 5px 25px 19px #000000;
+}
+
+.product_id {
+  color: gray;
+  font-size: 15px;
+  font-style: italic; /* Курсив для выделения */
+}
+
+.badge.bg-warning.text-dark {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  z-index: 1;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 1rem;
+  font-weight: bold; /* Жирный шрифт для выделения */
+  box-shadow: 2px 2px 15px 9px #000000;
+}
+
+.badge-banner {
+  top: 80%;
+  border-radius: 15px;
+  font-size: 0.7rem;
+}
+
+/* Ограничение ширины контейнера на мобильных устройствах */
+@media (max-width: 768px) {
+  .contact-info {
+    display: none; /* Полностью скрываем контактную информацию на экранах до 768px */
+  }
+  header .container {
+    max-width: 100%; /* Установите максимальную ширину в 100% */
+    padding: 0 15px; /* Добавьте отступы для небольшого внутреннего пространства */
+  }
+  
+  /* Центрирование элементов навигации и бургер-меню */
+  .navbar {
+    padding: 0.5rem;
+  }
+
+  .navbar-toggler {
+    margin-left: auto; /* Перемещение бургер-меню вправо */
+  }
+  
+  /* Увеличение размера логотипа и бургер-меню */
+  .navbar-brand {
+    font-size: 1.2rem;
+    flex-grow: 1; /* Заставляем логотип занимать больше места */
+  }
+}

@@ -1,0 +1,189 @@
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "deps/css/bootstrap/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/my_css.css" %}">
+    <!-- Стиль footer-a для главной страницы -->
+    {% block css %}
+
+    {% endblock %}
+    <!-- Favicons for different platforms -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "deps/favicon/apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "deps/favicon/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "deps/favicon/favicon-16x16.png" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="manifest" href="{% static "deps/favicon/site.webmanifest" %}">
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <header>
+        <div class="contact-container"></div>
+            <div class="contact-info">
+                <div class="left">
+                    <a href="mailto:example@example.com" class="email">example@example.com</a>
+                    <a href="https://www.google.com/maps?q=your+address" class="address">Ваш адрес</a>
+                </div>
+                <div class="right">
+                    <span class="phone-number">+48602672382</span>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" class="social-icon facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/kovrik_eva_kd?igsh=OWg2eGY4eTUwNWw0&utm_source=qr" class="social-icon instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@eva_kovriki_kd" class="social-icon tiktok" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.youtube.com/@Avto_top" class="social-icon youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://t.me/avtotovarEva" class="social-icon telegram" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url "main:index" %}">Główna</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- Каталог в меню навигации -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Catalog
+                            </a>
+                            <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                                {% cache 60 catalog_categories %}
+                                {% tag_categories as categories %}
+                                {% for category in categories %}
+                                    <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                                {% endfor %}
+                                {% endcache %}
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url "configurate:input_view" %}">Dywaniki z Eva</a>
+                        </li>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Informacja
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item text-white" href="{% url "main:contact" %}">Contact</a></li>
+                                <li><a class="dropdown-item text-white" href="{% url "main:about" %}">O nas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{% url "user:users_cart" %}">Koszyk</a>
+                        </li>
+    
+                        {% if not user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="{% url "user:login" %}">Войти</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Moj profil
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item text-white" href="{% url "user:users_cart" %}">Корзина</a></li>
+                                    <li><a class="dropdown-item text-white" href="{% url "user:profile" %}">Личный кабинет</a>
+                                    </li>
+                                    {% if user.is_admin or user.is_staff %}
+                                        <li><a class="dropdown-item text-white" href="{% url "admin:index" %}">Админ панель</a></li>
+                                    {% endif %}
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-white" href="{% url "user:logout" %}">Выйти</a></li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <form class="d-flex" role="search" action="{% url "catalog:search" %}" method="get">
+                        <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <section>
+        <!-- Контент -->
+        <div class="container">
+            {% include "includes/notifications.html" %}
+            {% block content %}{% endblock %}
+        </div>
+    </section>
+
+    {% block footer %}
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Konto</h4>
+                <ul>
+                    <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Szybkie linki</h4>
+                <ul>
+                    <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                    <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                    <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                    <li><a href="{% url "main:about" %}">O nas</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Produkty</h4>
+                <ul>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Catalog
+                        </a>
+                        <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                            {% cache 60 catalog_categories %}
+                            {% tag_categories as categories %}
+                            {% for category in categories %}
+                                <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                            {% endfor %}
+                            {% endcache %}
+                        </ul>
+                    </li>
+                    <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+                </ul>
+            </div>
+            <div class="footer-section company-info">
+                <h4>Evatopcar sp z.o.o</h4>
+                <p>KRS: 0001088411</p>
+                <p>Nip: 7831898042</p>
+                <p>Regon: 527791798</p>
+                <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+                <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+                <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <script src="{% static "deps/js/jquery/jquery-3.7.0.min.js" %}"></script>
+    <script src="{% static "deps/js/jquery-ajax.js" %}"></script>
+    <script src="{% static "deps/js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+</body>
+
+</html>

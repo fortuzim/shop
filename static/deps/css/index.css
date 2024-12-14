@@ -1,0 +1,1322 @@
+/* Модальное окно */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 1000;
+    left: 50%; /* Центрируем по горизонтали */
+    top: 50%; /* Центрируем по вертикали */
+    transform: translate(-50%, -50%); /* Сдвигаем по центру */
+    width: auto; /* Автоматическая ширина */
+    height: auto; /* Автоматическая высота */
+    background-color: rgba(0, 0, 0, 0.9); /* Полупрозрачный черный фон */
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Отступы вокруг изображения */
+    border-radius: 8px; /* Умеренное скругление углов модального окна */
+    opacity: 0;
+    transition: opacity 0.5s ease; /* Плавность открытия */
+    max-width: 90%; /* Ограничиваем максимальную ширину окна */
+    max-height: 90%; /* Ограничиваем максимальную высоту окна */
+}
+
+/* Модальное окно становится видимым */
+.modal.show {
+    display: flex;
+    opacity: 1; /* Плавно изменяет прозрачность */
+}
+
+.modal-content {
+    width: 500px;  /* Фиксированная ширина изображения */
+    height: 500px; /* Фиксированная высота изображения */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.9); /* Начальное уменьшение размера для анимации */
+    transition: transform 0.3s ease; /* Плавное увеличение при открытии */
+    border-radius: 6px; /* Легкое скругление углов контента */
+}
+
+.modal-content img {
+    width: 100%;  /* Изображение подгоняется под 500x500 */
+    height: 100%;
+    object-fit: cover; /* Изображение будет обрезаться, сохраняя соотношение сторон */
+    border-radius: 6px; /* Легкое скругление углов изображения */
+    transition: transform 0.3s ease;
+}
+
+/* Кнопки навигации */
+.modal-prev, .modal-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5); /* Прозрачный темный фон */
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 32px; /* Задаем фиксированную ширину и высоту */
+    height: 32px;
+    z-index: 1001;
+    border-radius: 50%; /* Полностью скругляем углы для круга */
+    transition: transform 0.4s ease;
+    box-shadow: none; /* Убираем тень */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Плавное вращение стрелок при наведении */
+.modal-prev:hover, .modal-next:hover {
+    transform: translateY(-50%) rotate(360deg);
+}
+
+/* Располагаем кнопки ближе к изображению */
+.modal-prev {
+    left: 5px; /* Внутри изображения */
+}
+
+.modal-next {
+    right: 5px; /* Внутри изображения */
+}
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 1001;
+    background-color: rgba(0, 0, 0, 0.5); /* Прозрачный темный фон */
+    width: 32px; /* Задаем фиксированную ширину и высоту */
+    height: 32px;
+    border-radius: 50%; /* Полностью скругляем углы для круга */
+    box-shadow: none; /* Убираем тень */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Анимация появления изображения */
+.modal-content img {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@media (max-width: 768px) {
+    .modal {
+        max-width: 95%; /* Увеличиваем максимальную ширину до 95% */
+        max-height: 95%; /* Увеличиваем максимальную высоту */
+        padding: 5px; /* Уменьшаем отступы для компактности */
+    }
+
+    .modal-content {
+        width: 100%; /* Подгоняем ширину под доступное пространство */
+        height: auto; /* Автоматическая высота для лучшей адаптации */
+        max-height: 80vh; /* Ограничиваем высоту окна */
+        transform: scale(1); /* Убираем уменьшение */
+        transition: none; /* Убираем анимацию увеличения для мобильных */
+    }
+
+    .modal-content img {
+        width: 100%; /* Изображение занимает всю ширину */
+        height: auto; /* Сохраняем соотношение сторон */
+        max-height: 100%; /* Ограничиваем высоту, чтобы она не выходила за пределы */
+        object-fit: contain; /* Изображение масштабируется, сохраняя пропорции */
+    }
+
+    /* Изменение размеров кнопок для навигации */
+    .modal-prev, .modal-next, .close {
+        width: 24px; /* Уменьшенные размеры */
+        height: 24px;
+        font-size: 0.8rem; /* Меньший текст для кнопок */
+    }
+
+    /* Позиционируем кнопки ближе к центру изображения */
+    .modal-prev {
+        left: 10px;
+    }
+
+    .modal-next {
+        right: 10px;
+    }
+
+    /* Кнопка закрытия в верхнем углу */
+    .close {
+        top: 10px;
+        right: 10px;
+    }
+}
+
+
+.gradient-border-line {
+    border: none;
+    height: 2px; /* Толщина линии */
+    background: linear-gradient(45deg, #222, #000); /* Градиент от тёмно-серого к чёрному */
+    margin: 50px 0; /* Отступы сверху и снизу */
+}
+.custom-navbar-container {
+    background-image: url("{% static 'deps/images/dost3.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  /* Темное наложение на фон */
+  .custom-navbar-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Темное наложение для контраста */
+    z-index: 1;
+  }
+
+  .custom-navbar-list {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+    position: relative;
+    z-index: 2; /* Чтобы контент был поверх наложения */
+    color: #fff;
+  }
+
+  .custom-navbar-list h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .custom-nav-item {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* Прозрачный темный фон для контрастности */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .custom-nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }
+
+  .custom-nav-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    transition: color 0.3s ease;
+  }
+
+  .custom-nav-item:hover .custom-nav-link {
+    color: #fff;
+  }
+
+  .custom-dropdown-menu {
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-10px);
+  }
+
+  .custom-dropdown:hover .custom-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .custom-dropdown-item {
+    padding: 10px 15px;
+    color: #fff;
+    background-color: transparent;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .custom-dropdown-item:hover {
+    background-color: #00bfff;
+    color: #fff;
+  }
+
+/* Общие стили для контейнера */
+.custom-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px; /* Ограничение максимальной ширины */
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Стили для навигации и слайд-шоу */
+.custom-navbar-container,
+.custom-slideshow-container {
+    width: 48%; /* Оба блока занимают приблизительно 50% ширины контейнера */
+    border: 3px solid #000; /* Граница блока */
+    border-radius: 10px; /* Скругленные углы */
+    padding: 15px;
+    box-sizing: border-box; /* Учитывает padding и border в ширину */
+}
+
+/* Стили для навигации */
+.custom-nav-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.custom-nav-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.custom-nav-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Стили для слайд-шоу */
+.custom-slideshow-container {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 3px solid #000;
+    height: 300px; /* Задана высота слайд-шоу */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.custom-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+/* Стили для каждого слайда */
+.custom-slide img {
+    width: 100%; /* Занимает всю ширину слайдера */
+    height: 100%; /* Занимает всю высоту слайдера */
+    object-fit: cover; /* Масштабирует изображение, сохраняя пропорции */
+}
+
+/* Кнопки для навигации слайдера */
+.custom-prev, .custom-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Позиционирование кнопок "вперед" и "назад" */
+.custom-next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* Hover-эффект для кнопок */
+.custom-prev:hover, .custom-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Адаптивные стили для небольших экранов */
+@media (max-width: 768px) {
+    .custom-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%; /* Контейнер занимает всю ширину экрана */
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .custom-navbar-container,
+    .custom-slideshow-container {
+        width: 95%; /* Почти полная ширина экрана */
+        padding: 20px;
+        margin-bottom: 20px;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Увеличение размера шрифта и кнопок */
+    .custom-nav-button {
+        font-size: 18px;
+        padding: 15px 25px;
+    }
+
+    .custom-nav-container {
+        font-size: 18px;
+    }
+
+    /* Высота слайдера */
+    .custom-slideshow-container {
+        height: 350px; /* Оставляем высоту без изменений */
+    }
+
+    /* Увеличение изображения на всю ширину */
+    .custom-slide img {
+        object-fit: cover; /* Масштабирует изображение для покрытия */
+    }
+
+    /* Увеличение размера кнопок слайдера */
+    .custom-prev, .custom-next {
+        padding: 20px;
+        font-size: 20px;
+    }
+
+    /* Увеличенные заголовки и элементы навигации */
+    .custom-navbar-list h2 {
+        font-size: 28px; /* Уменьшен размер шрифта */
+        margin-bottom: 20px;
+    }
+    
+    .custom-nav-item {
+        padding: 15px 25px; /* Увеличенные отступы */
+        font-size: 20px;
+    }
+
+    .custom-nav-link {
+        font-size: 20px; /* Большой размер шрифта */
+    }
+
+    /* Увеличенные размеры для элементов dropdown */
+    .custom-dropdown-item {
+        padding: 12px 18px;
+        font-size: 18px;
+    }
+}
+
+
+
+
+.info {
+    padding: 0 10px; /* Adjust padding for better layout */
+}
+.custom-slide {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.custom-slide img {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+    border-image: linear-gradient(45deg, #f06, #007bff) 1;
+    border: 5px solid;
+}
+
+
+/* Делаем первый слайд видимым */
+.custom-slide:first-of-type {
+    display: block;
+}
+
+/* Кнопки листания */
+.custom-prev, .custom-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.custom-next {
+    right: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+/* Эффект fade для слайдов */
+.custom-fade {
+    animation: customFadeEffect 1s ease-in-out;
+}
+.custom-slide img {
+    width: 100%; /* Stretch the image to the full width */
+    height: 100%; /* Stretch the image to the full height */
+    object-fit: cover; /* Maintain the aspect ratio while filling the area */
+    border-radius: 0; /* Remove any previous border styling on the image */
+}
+@keyframes customFadeEffect {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .custom-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .custom-nav-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .custom-slideshow-container {
+        height: 200px; /* Уменьшаем высоту на маленьких экранах */
+    }
+
+    .info-container {
+        flex-direction: column; /* Вертикальное расположение */
+        align-items: center; /* Центрирование */
+    }
+
+    .info-item {
+        flex: 1 1 80%; /* Ширина блока на маленьких экранах */
+        margin: 10px 0; /* Отступы между блоками */
+    }
+}
+
+/* Стили для секции информации */
+.info {
+    text-align: center;
+    padding: 20px;
+}
+
+.info h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.info p {
+    font-size: 1.2em;
+    color: #666;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+/* Контейнер галереи */
+.gallery-container {
+    position: relative;
+    max-width: 100%;
+    margin: 20px auto;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 70px; /* Добавляем отступ снизу для кнопок */
+}
+
+/* Слайд-шоу */
+.gallery-slideshow {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    justify-content: center;
+}
+
+/* Контейнер для слайдов */
+.gallery-slide {
+    flex: 0 0 25%; /* Показываем 4 изображения одновременно (100% / 4) */
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #f0f0f0;
+    width: 450px; /* Фиксированная ширина */
+    height: 350px; /* Фиксированная высота */
+}
+
+/* Стили для изображений в слайде */
+.gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+}
+
+/* Кнопки навигации */
+.gallery-prev, .gallery-next {
+    position: absolute;
+    bottom: 10px; /* Положение кнопок относительно контейнера */
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: #ff9d00; /* Начальный жёлто-оранжевый цвет */
+    border: none;
+    border-radius: 50%; /* Делаем кнопки круглыми */
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    z-index: 100; /* Увеличиваем z-index, чтобы кнопки были сверху */
+    display: flex; /* Используем flexbox для центрирования текста */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Центрируем кнопки */
+.gallery-prev {
+    left: calc(50% - 70px); /* Сдвигаем влево для центровки */
+}
+
+.gallery-next {
+    left: calc(50% + 20px); /* Сдвигаем вправо для центровки */
+}
+
+.gallery-prev:hover, .gallery-next:hover {
+    background-color: #e38c00; /* Более насыщенный оттенок жёлто-оранжевого при наведении */
+    transform: scale(1.1); /* Увеличение кнопки */
+}
+
+.gallery h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Адаптация для планшетов (ширина до 1024px) */
+@media (max-width: 1024px) {
+    .gallery-slide {
+        flex: 0 0 50%; /* Показываем 2 изображения одновременно */
+        width: 100%;
+        height: 300px; /* Высота уменьшается для планшетов */
+    }
+
+    .gallery-slideshow {
+        justify-content: flex-start;
+    }
+}
+
+/* Адаптация для мобильных устройств (ширина до 768px) */
+@media (max-width: 768px) {
+    .gallery-slide {
+        flex: 0 0 100%; /* Показываем 1 изображение на экране */
+        box-sizing: border-box;
+        width: 100%;
+        height: 300px; /* Увеличиваем высоту для вертикального экрана */
+    }
+
+    .gallery-slideshow {
+        justify-content: flex-start;
+    }
+
+    .gallery-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+        display: block;
+    }
+
+    /* Убираем кнопки управления на мобильных устройствах */
+    .gallery-prev, .gallery-next {
+        display: none;
+    }
+}
+
+/* Адаптация для маленьких экранов (ширина до 480px) */
+@media (max-width: 480px) {
+    .gallery-slide {
+        width: 100%;
+        height: 300px; /* Высота уменьшается для очень маленьких экранов */
+    }
+
+    .gallery-slide img {
+        border-radius: 10px;
+    }
+
+    .gallery-container {
+        padding-bottom: 50px; /* Уменьшаем отступ для маленьких экранов */
+    }
+
+    /* На маленьких экранах изображение может занимать всю ширину */
+    .gallery-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+
+
+
+/* General styles for .info-container */
+.info-container {
+    display: flex;
+    justify-content: space-between; /* Space between items */
+    margin: 25px auto;
+    max-width: 1200px; /* Increased max-width for better layout */
+    flex-wrap: nowrap; /* Prevent wrapping on larger screens */
+}
+
+/* Info item layout: icon on the left, text on the right */
+.info-item {
+    flex: 1 1 20%; /* Allow items to take 20% of the width for 5 items in a row */
+    box-sizing: border-box;
+    padding: 25px; /* Increased padding for a more spacious layout */
+    margin: 12px; /* Spacing between items */
+    background-color: #ffffff; /* White background for contrast */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    align-items: center; /* Vertically align items */
+    text-align: left; /* Align text to the left */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+}
+
+/* Hover effect for info-item */
+.info-item:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.info-item i {
+    font-size: 36px; /* Increased icon size */
+    color: #000000; /* Change icon color to black */
+    margin-right: 20px; /* Space between icon and text */
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+/* Text container */
+.info-text {
+    display: flex;
+    flex-direction: column; /* Stack text vertically */
+    align-items: flex-start; /* Align text to the left */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Use ellipsis for overflow text */
+}
+
+.info-text h3 {
+    font-weight: 600; /* Bold heading */
+    color: #333; /* Darker heading color for contrast */
+    font-size: 22px; /* Larger font for heading */
+    margin: 0 0 5px 0; /* Space between heading and paragraph */
+    white-space: nowrap; /* Prevent heading from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Use ellipsis for overflow text */
+}
+
+.info-text p {
+    color: #777; /* Paragraph color */
+    font-size: 18px; /* Slightly larger font for paragraph text */
+    margin: 0; /* No margin */
+    line-height: 1.4; /* Line height for readability */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Use ellipsis for overflow text */
+}
+
+/* A more flexible layout for tablets */
+@media (max-width: 1024px) {
+    .info-container {
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        justify-content: center; /* Center the content */
+    }
+
+    .info-item {
+        flex: 1 1 45%; /* Two items per row */
+        margin: 15px; /* Increase margin */
+    }
+}
+
+/* Improved layout for mobile devices */
+@media (max-width: 768px) {
+    .info-container {
+        flex-direction: column; /* Stack items vertically */
+        max-width: 100%; /* Full width */
+        padding: 10px;
+    }
+
+    .info-item {
+        flex: 1 1 100%; /* Each item takes full width */
+        flex-direction: column; /* Icons above text */
+        text-align: center; /* Center text */
+        padding: 20px;
+        margin: 10px 0; /* Vertical margins */
+    }
+
+    .info-item i {
+        font-size: 32px; /* Reduce icon size */
+        margin-bottom: 10px; /* Space below icon */
+        margin-right: 0; /* Remove margin right */
+    }
+
+    .info-text {
+        align-items: center; /* Center text content */
+    }
+
+    .info-text h3 {
+        font-size: 20px; /* Reduce heading size */
+    }
+
+    .info-text p {
+        font-size: 16px; /* Reduce paragraph size */
+        text-align: center; /* Center paragraph text */
+    }
+}
+
+/* For smaller screens (max-width 480px) */
+@media (max-width: 480px) {
+    .info-container {
+        padding: 5px;
+    }
+
+    .info-item {
+        padding: 15px; /* Reduce padding */
+    }
+
+    .info-item i {
+        font-size: 28px; /* Smaller icon size */
+    }
+
+    .info-text h3 {
+        font-size: 18px; /* Smaller heading size */
+    }
+
+    .info-text p {
+        font-size: 14px; /* Smaller text size */
+    }
+}
+
+
+
+/* Контейнер для отзывов */
+.reviews-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    max-width: 1000px; /* Максимальная ширина контейнера */
+    margin: 20px auto;
+    transition: margin-left 0.3s ease, max-width 0.3s ease;
+}
+
+/* Слайд-шоу отзывов */
+.reviews-slideshow {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Элемент отзыва */
+.review-item {
+    display: none; /* Скрываем элементы по умолчанию */
+    flex-direction: column;
+    margin: 10px;
+    background-color: #f9f9f9; /* Цвет фона для отделения блоков */
+    border-radius: 8px; /* Закругление углов блоков */
+    padding: 20px;
+    box-sizing: border-box;
+    flex: 1 0 100%; /* Каждый отзыв занимает всю ширину */
+    max-width: 300px; /* Ограничение ширины отзыва */
+    max-height: 400px; /* Ограничение высоты отзыва */
+    overflow: hidden; /* Скрыть содержимое, выходящее за пределы блока */
+    opacity: 0; /* Начальное значение для плавности */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Плавный переход для непрозрачности и трансформации */
+    transform: translateY(20px); /* Начальная позиция для анимации */
+}
+.review-item.active {
+    display: flex; /* Отображаем активный элемент */
+    opacity: 1; /* Делаем его видимым */
+    transform: translateY(0); /* Вертикальное смещение при активации */
+}
+.review-item:hover {
+    transform: scale(1.02); /* Легкое увеличение элемента при наведении */
+}
+/* Кнопки управления слайд-шоу */
+.reviews-prev, .reviews-next, .gallery-prev1, .gallery-next1 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Плавное изменение масштаба при наведении */
+    z-index: 10;
+}
+/* Положение кнопок */
+.reviews-prev {
+    left: 10px;
+}
+
+.reviews-next {
+    right: 10px;
+}
+
+.gallery-prev1 {
+    left: -50px;
+}
+
+.gallery-next1 {
+    right: -50px;
+}
+
+/* Заголовок отзыва */
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Расположить иконку Google справа */
+    margin-bottom: 10px;
+}
+
+.review-container {
+    position: relative;
+    height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.reviews-slideshow {
+    max-height: 100%; /* Используем всю доступную высоту */
+    overflow-y: auto; /* Добавляем вертикальную прокрутку */
+}
+.reviews-container, .reviews-slideshow {
+    overflow-anchor: none; /* Сохраняет позицию при изменении текста */
+}
+
+/* Контейнер для аватарки и иконки */
+.review-avatar-container {
+    position: relative;
+}
+
+/* Аватарка отзыва */
+.review-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+/* Иконка внутри аватарки */
+.review-avatar-icon {
+    position: absolute; /* Абсолютное позиционирование внутри контейнера аватарки */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff; /* Цвет иконки */
+    font-size: 24px; /* Размер иконки */
+}
+
+/* Информация о отзыве */
+.review-info {
+    flex: 1;
+}
+
+/* Детали отзыва */
+.review-details {
+    display: flex;
+    flex-direction: column;
+    margin-right: auto; /* Чтобы аватарка, имя и дата были с одной стороны */
+}
+
+
+.review-name {
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+.review-date {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Значок Google */
+.review-icon {
+    font-size: 18px;
+    color: #333;
+    margin-left: 10px;
+}
+
+/* Звезды */
+.review-stars {
+    margin: 10px 0;
+}
+
+.review-stars i {
+    color: #f5c518;
+    font-size: 16px;
+}
+
+/* Текст отзыва */
+.review-text {
+    max-height: 60px; /* Ограничиваем высоту по умолчанию */
+    overflow: hidden; /* Прячем лишний текст и скролл */
+    position: relative;
+    transition: max-height 3.5s ease; /* Плавное изменение высоты */
+}
+.review-text.full-text {
+    max-height: 200px; /* Устанавливаем максимальную высоту при раскрытии */
+    transition: max-height 3.5s ease; /* Плавное изменение высоты */
+}
+.hidden {
+    display: none;
+}
+/* Дополнительный текст, который скрыт до нажатия кнопки */
+.more-text {
+    display: inline;
+}
+
+/* Стили для кнопки "Czytaj więcej" */
+.read-more {
+    background-color: transparent;
+    border: none;
+    color: #007acc;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 0;
+    display: block;
+    text-align: left;
+    transition: text-decoration 0.3s ease;
+}
+
+
+/* Добавить анимацию и видимость при наведении */
+.read-more:hover {
+    text-decoration: underline;
+}
+
+.read-more.hidden {
+    display: none;
+}
+
+
+/* Кнопки управления слайд-шоу */
+.reviews-prev,
+.reviews-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
+
+.reviews-prev {
+    left: 10px;
+    color: black;
+}
+
+.reviews-next {
+    right: 10px;
+    color: black;
+}
+
+
+
+
+.reviews-prev,
+.reviews-next {
+    background-color: #007bff; /* Цвет фона для кнопок */
+    color: white; /* Цвет текста */
+    border: none; /* Без границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 10px 15px; /* Отступы внутри кнопок */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+}
+
+.reviews-prev:hover,
+.reviews-next:hover {
+    background-color: #0056b3; /* Темный цвет при наведении */
+}
+
+
+
+.reviews-prev,
+.reviews-next {
+    background-color: #007bff; /* Цвет фона для кнопок */
+    color: white; /* Цвет текста */
+    border: none; /* Без границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 10px 15px; /* Отступы внутри кнопок */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+}
+
+.reviews-prev:hover,
+.reviews-next:hover {
+    background-color: #0056b3; /* Темный цвет при наведении */
+}
+
+/* Кнопки управления слайд-шоу */
+.gallery-prev1,
+.gallery-next1 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #007bff; /* Цвет фона для кнопок */
+    color: white; /* Цвет текста */
+    border: none; /* Без границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 10px 15px; /* Отступы внутри кнопок */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+    z-index: 10;
+}
+
+/* Расположение кнопки слева от слайдера */
+.gallery-prev1 {
+    left: -50px; /* Смещение кнопки за пределы слайдера, чтобы не перекрывала контент */
+}
+
+/* Расположение кнопки справа от слайдера */
+.gallery-next1 {
+    right: -50px; /* Смещение кнопки за пределы слайдера, чтобы не перекрывала контент */
+}
+
+/* Изменение фона при наведении */
+.gallery-prev1:hover,
+.gallery-next1:hover {
+    background-color: #0056b3; /* Темный цвет при наведении */
+}
+
+.company-review-row-wrapper {
+    display: flex; /* Выстраиваем блоки в одну строку */
+    align-items: center; /* Вертикальное выравнивание по центру */
+    gap: 40px; /* Увеличиваем промежуток между блоком компании и отзывами */
+    width: 1400px; /* Контейнер будет занимать всю ширину родителя */
+}
+
+.company-review-row {
+    display: flex;
+    align-items: center; /* Вертикальное выравнивание для контента внутри */
+    gap: 15px; /* Пространство между изображением и деталями */
+    flex-shrink: 0; /* Запрещаем уменьшение этого блока при недостатке места */
+}
+.company-profile-img img {
+    width: 80px; /* Размер изображения, можно изменить */
+    height: auto;
+}
+.company-profile-details {
+    display: flex;
+    flex-direction: column; /* Вертикальная компоновка для деталей компании */
+}
+
+/* Стили для горизонтальной прокрутки */
+.company-review-row::-webkit-scrollbar {
+    height: 8px; /* Высота полосы прокрутки для WebKit-браузеров */
+}
+
+.company-review-row::-webkit-scrollbar-thumb {
+    background-color: #007bff; /* Цвет полосы прокрутки */
+    border-radius: 10px;
+}
+
+/* Отдельный отзыв */
+.company-review-item {
+    flex: 0 0 300px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 300px;
+}
+
+.company-review-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+/* Заголовок отзыва */
+.company-review-header {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Звезды */
+.company-review-stars {
+    color: #f5c518;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* Текст отзыва */
+.company-review-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    margin-top: 10px;
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+/* Кнопка "Читать больше" */
+.company-review-read-more {
+    color: #007acc;
+    cursor: pointer;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-top: 10px;
+    display: block;
+    text-align: left;
+}
+
+.company-review-read-more:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .company-review-row-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .reviews-container {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .reviews-slideshow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .review-item {
+        display: none;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: left;
+        opacity: 0; /* Начальное значение для плавности */
+        transition: opacity 0.5s ease-in-out; /* Плавный переход для непрозрачности */
+    }
+    
+    .review-item.active {
+        display: block;
+        opacity: 1; /* Когда элемент активен, делаем его видимым */
+    }
+
+    .navigation-buttons {
+        display: flex;
+        justify-content: center; /* Центрируем кнопки */
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        transform: translateY(-50%);
+        z-index: 100000; /* Убедимся, что кнопки поверх отзывов */
+        gap: 0; /* Убираем промежутки между кнопками */
+    }
+    .gallery-prev1, .gallery-next1 {
+        font-size: 24px;
+        background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+        color: white; /* Цвет текста */
+        border: none; /* Без границы */
+        cursor: pointer; /* Курсор при наведении */
+        padding: 10px; /* Отступы внутри кнопок */
+        border-radius: 50%; /* Закругление кнопок */
+        width: 40px; /* Ширина кнопок */
+        height: 40px; /* Высота кнопок */
+        display: flex; /* Чтобы выровнять текст по центру */
+        justify-content: center; /* Центрирование текста */
+        align-items: center; /* Центрирование текста */
+        transition: background-color 0.3s; /* Плавный переход цвета */
+        margin: 0; /* Убираем отступы между кнопками */
+    }
+    
+    /* Стили для кнопок, чтобы они располагались впритык */
+    .gallery-prev1 {
+        margin-right: -10px; /* Отрицательный отступ для приближения кнопок */
+    }
+    
+    .gallery-next1 {
+        margin-left: -10px; /* Отрицательный отступ для приближения кнопок */
+    }
+    
+    /* Изменение фона при наведении */
+    .gallery-prev1:hover,
+    .gallery-next1:hover {
+        background-color: rgba(0, 0, 0, 0.8); /* Более темный цвет при наведении */
+    }
+    
+}

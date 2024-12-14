@@ -1,0 +1,304 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+{% endblock %}
+
+{% block modal_cart %}
+{% include "includes/cart_button.html" %}
+{% endblock  %}
+
+{% block content %}
+<style>
+    /* Стили контейнера About Us */
+    .about-us-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 20px; /* Добавляем отступы для воздуха */
+        background-color: #f9f9f9; /* Легкий серый фон для контраста */
+        border-radius: 10px; /* Скругляем углы */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Теневой эффект для объема */
+    }
+
+    /* Картинка в блоке About Us */
+    .about-us-image {
+        flex: 1 1 50%;
+        max-width: 48%; /* Немного уменьшаем, чтобы было больше пространства */
+    }
+
+    .about-us-image img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px; /* Скругляем края картинки */
+    }
+
+    /* Текстовая часть */
+    .about-us-text {
+        flex: 1 1 50%;
+        max-width: 48%;
+        padding-left: 30px;
+        color: #444; /* Чуть светлее текст для более комфортного чтения */
+    }
+
+    .about-us-text h2 {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: #007BFF; /* Синий цвет для акцента */
+    }
+
+    .about-us-text p {
+        font-size: 1.1em; /* Чуть больше стандартного */
+        margin-bottom: 15px;
+    }
+
+    /* Стили для секции "Факты о нас" */
+    .facts {
+        width: 100%;
+        padding-top: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .facts h3 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        color: #007BFF; /* Акцент на заголовке */
+    }
+
+    .facts-list {
+        padding-left: 20px;
+        list-style-type: disc;
+    }
+
+    .facts-list li {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        color: #555; /* Более светлый текст для улучшенного контраста */
+    }
+
+    /* Адаптация под мобильные устройства */
+    @media (max-width: 768px) {
+        .about-us-container {
+            flex-direction: column;
+        }
+
+        .about-us-image, .about-us-text {
+            max-width: 100%;
+        }
+
+        .about-us-text {
+            padding-left: 0;
+        }
+
+        .about-us-text h2 {
+            font-size: 1.5em;
+        }
+
+        .about-us-text p {
+            font-size: 1em;
+        }
+    }
+
+
+/* Общие стили для формы */
+.contact-form {
+    max-width: 90%; /* Увеличили ширину до 90% */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* Белый фон для блока формы */
+    border: 2px solid #ccc; /* Граница блока */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для каждого поля */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Стили для полей ввода и textarea */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    background-color: #f0f0f0; /* Серый фон внутри полей */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Стили для кнопки отправки */
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 600px) {
+    .contact-form {
+        padding: 15px;
+        max-width: 95%; /* Сделали ширину чуть меньше для мобильных */
+    }
+    
+    .btn-submit {
+        font-size: 16px;
+    }
+}
+/* Заголовок формы */
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+</style>
+<section class="section about-us">
+    <div class="about-us-container">
+        <!-- Левая колонка: картинка -->
+        <div class="about-us-image">
+            <!-- Здесь можно будет вставить картинку через Django -->
+            <img src="{% static 'deps/images/evafon2.jpg' %}" alt="EvatopCar">
+        </div>
+
+        <!-- Правая колонка: текст -->
+        <div class="about-us-text">
+            <h2>Witamy w EvaCraft</h2>
+            <p>Witamy w EvaCraft – firmie specjalizującej się w produkcji dywaników samochodowych EVA. Jesteśmy dumni z oferowania wysokiej jakości produktów, które nie tylko doskonale chronią wnętrze Twojego pojazdu, ale także dodają mu elegancji.</p>
+            <p>Nasze maty EVA są projektowane z myślą o trwałości i łatwości utrzymania. Dzięki innowacyjnym technologiom i starannej produkcji zapewniamy naszym klientom produkty, które spełniają najwyższe standardy.</p>
+            <p>Wybierz EvatopCar, aby zadbać o komfort i estetykę wnętrza swojego samochodu. Nasze maty EVA to nie tylko praktyczne rozwiązanie, ale także stylowy dodatek do Twojego pojazdu.</p>
+            <p>Dziękujemy za zainteresowanie EvatopCar – Twoim partnerem w ochronie i stylizacji wnętrza samochodu!</p>
+        </div>
+    </div>
+</section>
+
+<!-- Секция "Факты о нас", которая занимает всю ширину -->
+<section class="section facts">
+    <h3>Fakty o nas</h3>
+    <ul class="facts-list">
+        <li>EvaCraft – producent dywaników EVA do samochodów z siedzibą w Poznaniu.</li>
+        <li>EvaCraft – spółka z ograniczoną odpowiedzialnością, płatnik VAT. Ceny naszych produktów są ustalane zgodnie z wymogami polskiego prawa.</li>
+        <li>EvaCraft – produkujemy klasyczne dywaniki (2D), dywaniki z bokami (3D), dywaniki do bagażnika i organizery.</li>
+        <li>EvaCraft – to usługa skoncentrowana na maksymalnej orientacji na klienta i profesjonalne podejście. Szybko przyjmujemy zamówienia i dostarczamy je do Państwa.</li>
+        <li>EvaCraft – pełny cykl produkcji, od pobrania wzorów (jeżeli modelu auta niema w naszej bazie szablonów), wyboru kolorów materiału i obszycia do montażu dywaników. Otrzymują Państwo zadbany salon autka. Zapraszamy do kontaktu!</li>
+        <li>EvaCraft – gwarantujemy, że otrzymają Państwo wysokiej jakości produkt, który podkreśli charakter Państwa samochodu.</li>
+        <li>EvaCraft – nasze ceny zawierają wszystkie niezbędne elementy (klipsy, pięty, rzepy, dodatkowe elementy mocowania), dlatego nie będzie Państwu potrzebne dodatkowe opłaty.</li>
+        <li>EvaCraft – współpracujemy bezpośrednio z najlepszymi producentami płyt EVA, taśm, nici, elementów mocowania. Dlatego jesteśmy pewni, że klient otrzyma wysokiej jakości produkt do swojego samochodu.</li>
+        <li>EvaCraft – odbiór towaru jest możliwy zarówno przez odbiór osobisty, jak i dostawę kurierską, zależnie od rozmiaru produktu.</li>
+        <li>EvaCraft – obsługujemy podstawowe metody płatności (Blik, karta płatnicza, Szybki Przelew, Google pay, Apple pay).</li>
+    </ul>
+</section>
+<h2 class="form-title">Skontaktuj się z nami</h2>
+<form method="post" class="contact-form">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" class="form-control" required></textarea>
+    </div>
+    
+    <button type="submit" class="btn-submit">Отправить</button>
+</form>
+
+
+
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Konto</h4>
+            <ul>
+                <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Szybkie linki</h4>
+            <ul>
+                <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                <li><a href="{% url "main:about" %}">O nas</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Produkty</h4>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Catalog
+                    </a>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% cache 60 catalog_categories %}
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                        {% endcache %}
+                    </ul>
+                </li>
+                <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+            </ul>
+        </div>
+        <div class="footer-section company-info">
+            <h4>Evatopcar sp z.o.o</h4>
+            <p>KRS: 0001088411</p>
+            <p>Nip: 7831898042</p>
+            <p>Regon: 527791798</p>
+            <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+            <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+            <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+{% endblock %}
+

@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+{% endblock %}
+
+
+{% block content %}
+    <style>
+        
+    </style>
+    <!-- Regulatory Information Sections -->
+    <section class="regulation-section">
+        <h2>REGULAMIN SKLEPU INTERNETOWEGO</h2>
+    </section>
+
+    <section class="regulation-section">
+        <h2>Definicje</h2>
+        <p><strong>Klient</strong> – osoba fizyczna, osoba prawna lub ułomna osoba prawna. Osoba fizyczna może być Klientem, jeżeli:
+            <ul>
+                <li>(a) posiada pełną zdolność do czynności prawnych;</li>
+                <li>(b) uzyska zgodę przedstawiciela ustawowego lub opiekuna prawnego w przypadku, gdy posiada ograniczoną zdolność do czynności prawnych;</li>
+                <li>(c) jest reprezentowana przez przedstawiciela ustawowego lub opiekuna prawnego w przypadku, gdy nie posiada zdolności do czynności prawnych.</li>
+            </ul>
+        </p>
+        <p><strong>Konsument</strong> – osoba fizyczna, zawierająca ze Sprzedawcą umowę sprzedaży niezwiązaną bezpośrednio z jej działalnością gospodarczą lub zawodową, lub (i) osoba fizyczna prowadząca działalność gospodarczą, zawierająca umowę bezpośrednio związaną z jej działalnością gospodarczą, gdy z treści tej umowy wynika, że nie posiada ona dla niej charakteru zawodowego, wynikającego w szczególności z przedmiotu wykonywanej przez nią działalności gospodarczej, udostępnionego na podstawie przepisów o Centralnej Ewidencji i Informacji o Działalności Gospodarczej.</p>
+        <p><strong>Regulamin</strong> – niniejszy regulamin, dostępny pod adresem <a href="{% url 'main:regulamin' %}">Regulamin</a>.</p>
+        <p><strong>Sklep</strong> – sklep internetowy działający pod adresem www.pl Sprzedawca: Evatopcar sp. z o.o., telefon: +48 789 662 179, e-mail: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a>, NIP: 7831898042, REGON: 527791798, wpisany do Krajowego Rejestru Sądowego pod numerem: 0001088411.</p>
+    </section>
+
+    <section class="regulation-section">
+        <h2>Postanowienie wstępne</h2>
+        <p>Klient jest zobowiązany do korzystania ze sklepu zgodnie z obowiązującymi przepisami prawa.</p>
+    </section>
+
+    <section class="regulation-section">
+        <h2>Zamówienia i Płatności</h2>
+        <p>Za pośrednictwem Sklepu, Sprzedawca prowadzi sprzedaż detaliczną, świadcząc jednocześnie na rzecz Kupujących usługi drogą elektroniczną. Za pośrednictwem Sklepu, Kupujący może dokonać zakupu produktów uwidocznionych na stronach Sklepu.</p>
+        <p>Regulamin określa zasady i warunki korzystania ze Sklepu, a także prawa i obowiązki Sprzedawcy i Kupujących.</p>
+        <p>Do korzystania ze Sklepu, w tym w szczególności do dokonania zakupu w Sklepie, nie jest konieczne spełnienie szczególnych warunków technicznych przez komputer lub inne urządzenie Kupującego. Wystarczające są:</p>
+        <ul>
+            <li>dostęp do Internetu,</li>
+            <li>standardowy system operacyjny,</li>
+            <li>standardowa przeglądarka internetowa,</li>
+            <li>posiadanie aktywnego adresu e-mail.</li>
+        </ul>
+        <p>Kupujący nie może dokonać zakupu w Sklepie anonimowo ani pod pseudonimem.</p>
+        <p>Zakazane jest podczas korzystania ze Sklepu dostarczanie treści o charakterze bezprawnym, w szczególności poprzez przesyłanie takich treści za pośrednictwem formularzy dostępnych w Sklepie.</p>
+        <p>Wszystkie ceny produktów podane na stronach Sklepu są cenami brutto.</p>
+    </section>
+
+    <section class="regulation-section">
+        <h2>Usługi świadczone drogą elektroniczną</h2>
+        <p>Za pośrednictwem Sklepu, Sprzedawca świadczy na rzecz Kupującego usługi drogą elektroniczną.</p>
+        <p>Podstawową usługą świadczoną drogą elektroniczną na rzecz Kupującego przez Sprzedawcę jest umożliwienie Kupującemu złożenia zamówienia w Sklepie. Złożenie zamówienia możliwe jest bez konieczności założenia konta w Sklepie.</p>
+        <p>Jeżeli Kupujący zdecyduje się założyć konto w Sklepie, Sprzedawca świadczy na rzecz Kupującego również usługę drogą elektroniczną polegającą na założeniu i utrzymywaniu konta w Sklepie. W koncie przechowywane są dane Kupującego oraz historia złożonych przez niego zamówień w Sklepie. Kupujący loguje się do Konta z wykorzystaniem swojego adresu e-mail oraz zdefiniowanego przez siebie hasła.</p>
+        <p>Założenie konta w Sklepie odbywa się poprzez wypełnienie i przesłanie, za pomocą automatycznego mechanizmu Sklepu, formularza rejestracyjnego. Z chwilą przesłania formularza rejestracyjnego, między Kupującym a Sprzedawcą zawierana jest umowa o prowadzenie konta w Sklepie. Umowa zawierana jest na czas nieokreślony, a Kupujący może tę umowę wypowiedzieć ze skutkiem natychmiastowym w każdej chwili, usuwając konto.</p>
+        <p>Usługi świadczone są drogą elektroniczną na rzecz Kupującego nieodpłatnie. Odpłatne są natomiast umowy sprzedaży zawierane za pośrednictwem Sklepu.</p>
+        <p>W celu zapewnienia bezpieczeństwa Kupującemu i przekazu danych w związku z korzystaniem ze Sklepu, Sprzedawca podejmuje środki techniczne i organizacyjne odpowiednie do stopnia zagrożenia bezpieczeństwa świadczonych usług, w szczególności środki służące zapobieganiu pozyskiwania i modyfikacji danych osobowych przez osoby nieuprawnione.</p>
+        <p>Sprzedawca podejmuje działania w celu zapewnienia w pełni poprawnego funkcjonowania Sklepu. Kupujący powinien poinformować Sprzedawcę o wszelkich nieprawidłowościach lub przerwach w funkcjonowaniu Sklepu.</p>
+        <p>Wszelkie reklamacje związane z funkcjonowaniem Sklepu, Kupujący może zgłaszać za pośrednictwem poczty elektronicznej na adres e-mail <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a>. W reklamacji Kupujący powinien podać imię i nazwisko, adres do korespondencji, a także rodzaj i datę wystąpienia nieprawidłowości związanej z funkcjonowaniem Sklepu. Sprzedawca będzie rozpatrywać wszelkie reklamacje w terminie do 14 dni od otrzymania reklamacji i poinformuje Klienta o jej rozstrzygnięciu na adres e-mail składającego reklamację.</p>
+    </section>
+
+    <!-- Additional Regulatory Sections -->
+    <section class="regulation-section">
+        <h2>Składanie zamówienia</h2>
+        <p>Kupujący może złożyć zamówienie jako gość lub jako zarejestrowany klient.</p>
+        <p>Zarejestrowanym klientem jest Kupujący, który posiada konto w Sklepie. Kupujący może założyć konto na etapie składania zamówienia lub niezależnie od składania zamówienia.</p>
+        <p>Złożenie zamówienia odbywa się poprzez wypełnienie formularza zamówienia po uprzednim dodaniu do koszyka interesujących Kupującego produktów. W formularzu konieczne jest podanie danych niezbędnych do realizacji zamówienia. Na etapie składania zamówienia następuje również wybór sposobu dostawy zamówionych produktów oraz wybór metody płatności za zamówienie. Warunkiem złożenia zamówienia jest akceptacja regulaminu sklepu, z którym Kupujący powinien uprzednio się zapoznać. W razie jakichkolwiek wątpliwości dotyczących regulaminu, Kupujący może skontaktować się ze Sprzedawcą.</p>
+        <p>Proces składania zamówienia kończy kliknięcie w przycisk finalizujący zamówienie. Kliknięcie w przycisk finalizujący zamówienie stanowi oświadczenie woli Kupującego prowadzące do zawarcia ze Sprzedawcą umowy sprzedaży produktów objętych zamówieniem.</p>
+        <p>Po kliknięciu w przycisk finalizujący zamówienie Kupujący będzie miał możliwość wyboru formy płatności i zostanie przekierowany do bramki płatności obsługiwanej przez zewnętrznego operatora płatności celem dokonania płatności za zamówienie. Jeżeli Kupujący wybrał płatność przelewem bankowym, po kliknięciu w przycisk finalizujący zamówienie zostanie przekierowany na stronę Sklepu z instrukcją dokonania płatności. Zapłata za zamówienie powinna nastąpić w ciągu 5 dni od zawarcia umowy.</p>
+        <p>W formularzu zamówienia Kupujący musi podać prawdziwe dane osobowe. Kupujący ponosi odpowiedzialność za podanie nieprawdziwych danych osobowych. Sprzedawca zastrzega sobie prawo do wstrzymania realizacji zamówienia w sytuacji, gdy Kupujący podał nieprawdziwe dane lub gdy dane te budzą uzasadnione wątpliwości Sprzedającego co do ich poprawności. W takim przypadku Kupujący zostanie poinformowany telefonicznie lub poprzez pocztę elektroniczną o wątpliwościach Sprzedawcy. W takiej sytuacji Kupującemu przysługuje prawo wyjaśnienia wszelkich okoliczności związanych z weryfikacją prawdziwości podanych danych. W przypadku braku danych pozwalających Sprzedawcy na podjęcie kontaktu z Kupującym, Sprzedawca udzieli wszelkich wyjaśnień po podjęciu kontaktu przez Kupującego.</p>
+        <p>Kupujący oświadcza, że wszelkie dane podane przez niego w formularzu zamówienia są prawdziwe, natomiast Sprzedawca nie jest zobowiązany do weryfikowania ich prawdziwości i poprawności, choć posiada takie uprawnienie zgodnie z ust. 6 powyżej.</p>
+    </section>
+
+    <section class="regulation-section">
+        <h2>Formy dostawy i metody płatności</h2>
+        <p>Dostępne do wyboru sposobu dostawy zamówienia opisane są na stronie Sklepu oraz prezentowane są Kupującemu na etapie składania zamówienia.</p>
+        <p>Dostępne metody płatności za zamówienie opisane są na stronie Sklepu oraz prezentowane są Kupującemu na etapie składania zamówienia.</p>
+        <p>Koszt dostawy zamówienia ponosi Kupujący, chyba że Sprzedawca na stronie Sklepu wskaże inaczej.</p>
+        <p>Płatności elektroniczne, w tym płatności kartą płatniczą, obsługiwane są przez Bramka Płatnicza Axepta BNP Paribas.</p>
+    </section>
+
+    <section class="regulation-section">
+        <h2>Realizacja zamówienia</h2>
+        <p>Po złożeniu przez Kupującego zamówienia zgodnie z procedurą opisaną w § 4 Regulaminu, na adres poczty elektronicznej Kupującego zostanie wysłane potwierdzenie zamówienia.</p>
+        <p>Jeśli Kupujący wybrał metodę płatności w postaci przelewu na rachunek bankowy Sprzedawcy, zobowiązany jest zapłacić za zamówienie w terminie 5 dni od chwili zawarcia umowy.</p>
+        <p>Realizacja zamówienia polega na jego przygotowaniu do wysyłki do Kupującego albo do odbioru osobistego przez Kupującego. Zamówienie uważa się za zrealizowane z chwilą przygotowania zamówienia do wysyłki albo przygotowania do odbioru osobistego przez Kupującego.</p>
+        <p>Termin realizacji zamówienia wynosi nie więcej niż 21 dni od momentu otrzymania płatności.</p>
+        <p>Jeśli zamówienie obejmuje więcej niż jeden produkt, czasem realizacji zamówienia jest najdłuższy czas wskazany w opisie produktu wchodzącego w skład zamówienia.</p>
+        <p>Czas realizacji zamówienia liczony jest od chwili dokonania płatności za zamówienie, chyba, że Kupujący wybrał formę płatności za pobraniem – wtedy czas realizacji zamówienia liczony jest do chwili zawarcia umowy.</p>
+        <p>Po zrealizowaniu zamówienia Sprzedawca prześle na adres poczty elektronicznej Kupującego potwierdzenie realizacji zamówienia i rozpocznie wysyłkę zamówienia do Kupującego albo powiadomi Kupującego o możliwości odbioru osobistego zamówienia.</p>
+        <p>Wysyłka zamówienia do Kupującego realizowana jest w sposób wybrany przez Kupującego na etapie składania zamówienia.</p>
+        <p>Czas dostawy zamówienia do Kupującego zależny jest od wybranej przez Kupującego metody wysyłki i liczony jest od dnia zrealizowania zamówienia.</p>
+    </section>
+
+    <section class="regulation-section">
+        <h2>Zwroty</h2>
+        <p>Konsument, który zawarł ze Sprzedawcą umowę na odległość, ma prawo odstąpić od umowy bez podawania przyczyny w terminie 14 dni od dnia objęcia w posiadanie kupionych rzeczy.</p>
+        <p>Aby odstąpić od umowy, Konsument musi poinformować Sprzedawcę o swojej decyzji o odstąpieniu od umowy w drodze jednoznacznego oświadczenia – na przykład pismo wysłane pocztą, lub pocztą elektroniczną.</p>
+        <p>Aby zachować termin do odstąpienia od umowy, wystarczy, aby Konsument wysłał informację dotyczącą wykonania przysługującego Konsumentowi prawa odstąpienia od umowy przed upływem terminu do odstąpienia od umowy.</p>
+        <p>Konsument ma obowiązek zwrócić produkt Sprzedawcy lub przekazać go osobie upoważnionej przez Sprzedawcę do odbioru niezwłocznie, jednak nie później niż 14 dni od dnia, w którym odstąpił od umowy, chyba że Sprzedawca zaproponował, że sam odbierze rzecz. Do zachowania terminu wystarczy odesłanie produktu przed jego upływem.</p>
+        <p>Konsument ponosi bezpośrednie koszty zwrotu rzeczy.</p>
+        <p>W przypadku odstąpienia od umowy, Sprzedawca zwraca Konsumentowi wszystkie otrzymane od Konsumenta płatności, w tym najtańszy dostępny w Sklepie koszt dostarczenia produktów (jeśli koszt pokrył Konsument) niezwłocznie, a w każdym przypadku nie później niż 14 dni od dnia, w którym Sprzedawca został poinformowany o wykonaniu prawa odstąpienia od umowy. Zwrot płatności zostanie dokonany przy użyciu takich samych sposobów płatności, jakie zostały przez Konsumenta użyte w pierwotnej transakcji, chyba że Konsument wyraźnie zgodził się na inne rozwiązanie. W każdym przypadku Konsument nie poniesie żadnych opłat w związku z formą zwrotu płatności.</p>
+        <p>Jeżeli Sprzedawca nie zaproponował, że sam odbierze rzecz od Konsumenta, może wstrzymać się ze zwrotem płatności otrzymanych od Konsumenta do chwili otrzymania rzeczy z powrotem lub dostarczenia przez Konsumenta dowodu jej odesłania, w zależności od tego, które zdarzenie nastąpi wcześniej.</p>
+        <p>Konsument ponosi odpowiedzialność za zmniejszenie wartości produktu będące wynikiem korzystania z produktu w sposób wykraczający poza konieczny do stwierdzenia charakteru, cech i funkcjonowania produktu.</p>
+    </section>
+    
+    
+    
+    <!-- Reklamacje Section -->
+    <section class="regulamin-section">
+        <h2>Reklamacje</h2>
+        <p>Zgodnie z przepisami masz prawo do reklamacji nabytego towaru.</p>
+        <p>Pobierz formularz reklamacji, wydrukuj go i wypełnij:</p>
+        <p><a href="#" class="download-link">Pobierz Formularz Reklamacji</a></p>
+        <p>Zapakuj zwracany produkt i formularz reklamacji do koperty, foliopaku lub kartonu.</p>
+        <p>Wyślij paczkę pocztową lub kurierską na nasz adres: <strong>Krauthofera 58, 60-202 Poznań, Polska</strong>.</p>
+        <p>W ciągu 14 dni kalendarzowych reklamacja zostanie rozpatrzona.</p>
+        <p>W przypadku uzasadnionej reklamacji, sklep zwróci wszelkie poniesione przez Klienta koszty transakcji.</p>
+        <p>Zwroty kosztów transakcji realizowane są przelewem bankowym.</p>
+        <p>Reklamacje rozpatrywane są zgodnie z ustawą z 27 VI 2002r. o szczególnych warunkach sprzedaży konsumenckiej oraz o zmianie Kodeksu cywilnego (Dz.U. nr 141, poz. 1176 z późn. zm.).</p>
+        <p>Sklep nie odpowiada za niezgodność towaru konsumpcyjnego z umową, gdy kupujący o tej niezgodności wiedział lub, oceniając rozsądnie, powinien był wiedzieć.</p>
+    </section>
+
+    <!-- Odpowiedzialność za wady Section -->
+    <section class="regulamin-section">
+        <h2>Odpowiedzialność za wady</h2>
+        <p>Sprzedawca ma obowiązek dostarczyć Kupującemu produkt wolny od wad.</p>
+        <p>Sprzedawca jest odpowiedzialny względem Kupującego, jeżeli sprzedany produkt ma wadę fizyczną lub prawną (rękojmia za wady).</p>
+        <p>Jeżeli sprzedany produkt ma wadę, Kupujący może:</p>
+        <ul>
+            <li>żądać wymiany produktu na wolny od wad,</li>
+            <li>żądać usunięcia wady,</li>
+            <li>złożyć oświadczenie o obniżeniu ceny,</li>
+            <li>złożyć oświadczenie o odstąpieniu od umowy.</li>
+        </ul>
+        <p>Jeśli Kupujący stwierdzi wadę produktu, powinien poinformować o tym Sprzedawcę, określając jednocześnie swoje roszczenie związane ze stwierdzoną wadą lub składając oświadczenie stosownej treści.</p>
+        <p>Kupujący może kontaktować się ze Sprzedawcą zarówno pocztą tradycyjną, jak również pocztą elektroniczną.</p>
+        <p>Sprzedawca ustosunkuje się do składanej przez Kupującego reklamacji w ciągu 14 dni od dnia doręczenia mu reklamacji za pomocą takiego środka komunikacji, przy wykorzystaniu którego reklamacja została złożona.</p>
+        <p>Szczegóły dotyczące rękojmi Sprzedawcy za wady regulują przepisy Kodeksu cywilnego (art. 556 – 576).</p>
+    </section>
+
+    <!-- Dane osobowe i pliki cookies Section -->
+    <section class="regulamin-section">
+        <h2>Dane osobowe i pliki cookies</h2>
+        <p>Administratorem danych osobowych Kupującego jest Sprzedawca.</p>
+        <p>Dane osobowe Kupującego przetwarzane są w celu obsługi konta użytkownika, realizacji zamówienia oraz ewentualnej obrony, dochodzenia lub ustalenia roszczeń związanych z zawieranymi za pośrednictwem Sklepu umowami sprzedaży.</p>
+    </section>
+
+    <!-- Pozasądowe sposoby rozpatrywania reklamacji i dochodzenia roszczeń Section -->
+    <section class="regulamin-section">
+        <h2>Pozasądowe sposoby rozpatrywania reklamacji i dochodzenia roszczeń</h2>
+        <p>Sprzedawca wyraża zgodę na poddanie ewentualnych sporów wynikłych w związku ze sprzedażą towarów na drodze postępowania mediacyjnego. Szczegóły zostaną określone przez strony konfliktu.</p>
+        <p>Konsument ma możliwość skorzystania z pozasądowych sposobów rozpatrywania reklamacji i dochodzenia roszczeń. Między innymi, Konsument ma możliwość:</p>
+        <ul>
+            <li>zwrócenia się do stałego polubownego sądu konsumenckiego z wnioskiem o rozstrzygnięcie sporu wynikłego z zawartej umowy sprzedaży,</li>
+            <li>zwrócenia się do wojewódzkiego inspektora Inspekcji Handlowej z wnioskiem o wszczęcie postępowania mediacyjnego w sprawie polubownego zakończenia sporu między Kupującym a Sprzedawcą,</li>
+            <li>skorzystania z pomocy powiatowego (miejskiego) rzecznika prawa konsumenta lub organizacji społecznej, do której statutowych zadań należy ochrona konsumentów.</li>
+        </ul>
+        <p>Bardziej szczegółowych informacji na temat pozasądowych sposobów rozpatrywania reklamacji i dochodzenia roszczeń, Konsument może szukać na stronie internetowej <a href="http://polubowne.uokik.gov.pl" target="_blank" rel="noopener noreferrer">polubowne.uokik.gov.pl</a>.</p>
+    </section>
+
+    <!-- Postanowienia końcowe Section -->
+    <section class="regulamin-section">
+        <h2>Postanowienia końcowe</h2>
+        <p>Sprzedawca zastrzega sobie prawo do wprowadzania oraz odwoływania ofert, promocji oraz do zmiany cen produktów w Sklepie bez uszczerbku dla praw nabytych przez Kupującego, w tym w szczególności warunków umów zawartych przed dokonaniem zmiany.</p>
+        <p>Sprzedawca zastrzega sobie możliwość wprowadzania zmian w Regulaminie. Do umów zawartych przed zmianą Regulaminu stosuje się Regulamin obowiązujący w dacie zawarcia umowy.</p>
+        <p>Kupujący, którzy posiadają konto w Sklepie o każdej zmianie Regulaminu zostaną powiadomieni pocztą elektroniczną na adres e-mail przypisany do konta. W przypadku braku akceptacji treści nowego Regulaminu, Kupujący ma prawo w każdym czasie wypowiedzieć umowę o prowadzenie konta poprzez usunięcie konta lub złożenie Sprzedawcy stosownego oświadczenia, w dowolnej formie, o wypowiedzeniu umowy o prowadzenie konta.</p>
+        <p>Kupujący przed dokonaniem zakupu akceptuje składniki produktu oraz cennik podany w regulaminie sklepu.</p>
+        <p>Niniejszy Regulamin obowiązuje od dnia 01.03.2024.</p>
+    </section>
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Konto</h4>
+            <ul>
+                <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Szybkie linki</h4>
+            <ul>
+                <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                <li><a href="{% url "main:about" %}">O nas</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Produkty</h4>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Catalog
+                    </a>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% cache 60 catalog_categories %}
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                        {% endcache %}
+                    </ul>
+                </li>
+                <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+            </ul>
+        </div>
+        <div class="footer-section company-info">
+            <h4>Evatopcar sp z.o.o</h4>
+            <p>KRS: 0001088411</p>
+            <p>Nip: 7831898042</p>
+            <p>Regon: 527791798</p>
+            <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+            <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+            <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+{% endblock %}
+
+

@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-container {
+            display: flex;
+            flex-wrap: wrap; /* Flex to handle responsiveness */
+            justify-content: space-between;
+            background-color: #fff;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Image container */
+        .image-container {
+            flex-basis: 40%;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Text content */
+        .content {
+            flex-basis: 55%;
+        }
+
+        h1, h2 {
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+
+        h2 {
+            margin-top: 1.5rem;
+        }
+
+        /* Button styling */
+        button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .content-container {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .image-container, .content {
+                flex-basis: 100%;
+            }
+
+            h1 {
+                text-align: center;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <!-- Левый блок с изображением -->
+    <div class="image-container">
+        <img src="{{ image_url }}" alt="Selected Carpet">
+    </div>
+
+    <!-- Правый блок с контентом -->
+    <div class="content">
+        <h1>Potwierdzenie konfiguracji</h1>
+
+        <p><strong>Komplet:</strong> {{ product_config.complete_set }}</p>
+        <p><strong>Matę:</strong> {{ product_config.mat }}</p>
+        <p><strong>Kształt komórek:</strong> {{ product_config.shape }}</p>
+        <p><strong>Kolor obszycia:</strong> {{ product_config.color }}</p>
+        <p><strong>Kolor dywanika:</strong> {{ product_config.carpet_color }}</p>
+        <p><strong>Markę Auta:</strong> {{ product_config.car_brand }}</p>
+        <p><strong>Model Auta:</strong> {{ product_config.car_model }}</p>
+        <p><strong>Rok produkcji:</strong> {{ product_config.production_year }}</p>
+
+        <h2><strong>Cena:</strong> {{ total_price }} PLN</h2>
+
+        <form method="post" action="{% url 'carts:cart_add' %}">
+            {% csrf_token %}
+            
+            <input type="hidden" name="configuration_id" value="{{ product_config.id }}">
+            <button type="submit">Dodacz do koszyka</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Konto</h4>
+            <ul>
+                <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Szybkie linki</h4>
+            <ul>
+                <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                <li><a href="{% url "main:about" %}">O nas</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Produkty</h4>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Catalog
+                    </a>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% cache 60 catalog_categories %}
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                        {% endcache %}
+                    </ul>
+                </li>
+                <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+            </ul>
+        </div>
+        <div class="footer-section company-info">
+            <h4>Evatopcar sp z.o.o</h4>
+            <p>KRS: 0001088411</p>
+            <p>Nip: 7831898042</p>
+            <p>Regon: 527791798</p>
+            <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+            <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+            <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+{% endblock %}

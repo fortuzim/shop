@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+{% endblock %}
+
+
+{% block content %}
+    <style>
+        h1, h2, h3 {
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        a {
+            color: #1a0dab;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .contact-info {
+            margin-top: 20px;
+        }
+    </style>
+    <h1>Polityka Prywatności</h1>
+    <p>Niniejsza Polityka Prywatności opisuje, w jaki sposób evatopcar.pl („Witryna” lub „my”) gromadzi, wykorzystuje i ujawnia Twoje Dane Osobowe, gdy odwiedzasz Witrynę lub dokonujesz na niej zakupów.</p>
+
+    <h2>Gromadzenie danych osobowych</h2>
+    <p>Podczas odwiedzania Witryny gromadzimy pewne informacje o urządzeniu użytkownika, jego interakcji z Witryną oraz informacje niezbędne do przetworzenia dokonanych przez niego zakupów. Możemy również gromadzić dodatkowe informacje, jeśli użytkownik skontaktuje się z nami w celu uzyskania pomocy technicznej. W niniejszej Polityce prywatności wszelkie informacje, które umożliwiają jednoznaczną identyfikację osoby (w tym informacje podane poniżej), określamy mianem „Danych osobowych”. Więcej informacji o tym, jakie Dane osobowe gromadzimy i dlaczego, znajduje się na poniższej liście.</p>
+
+    <h3>Informacje o urządzeniu</h3>
+    <ul>
+        <li><strong>Przykłady gromadzonych danych osobowych:</strong> wersja przeglądarki internetowej, adres IP, strefa czasowa, informacje o plikach cookie, przeglądane witryny lub produkty, wyszukiwane hasła oraz sposób interakcji z Witryną.</li>
+        <li><strong>Cel gromadzenia danych:</strong> dokładne wczytanie Witryny dla użytkownika oraz przeprowadzenie analizy użytkowania Witryny w celu jej optymalizacji.</li>
+        <li><strong>Źródło gromadzenia danych:</strong> Dane zbierane automatycznie podczas korzystania z Witryny za pomocą plików cookie, plików dziennika systemowego, sygnałów nawigacyjnych, znaczników lub pikseli.</li>
+        <li><strong>Ujawnienie danych w celach biznesowych:</strong> udostępniane naszemu procesorowi.</li>
+    </ul>
+
+    <h3>Informacje o zamówieniach</h3>
+    <ul>
+        <li><strong>Przykłady gromadzonych danych osobowych:</strong> imię i nazwisko, adres rozliczeniowy, adres wysyłki, informacje o płatności (nie gromadzimy pełnego numeru karty kredytowej, a jedynie 4 ostatnie cyfry karty kredytowej), adres e-mail i numer telefonu.</li>
+        <li><strong>Cel gromadzenia danych:</strong> dostarczanie produktów lub usług użytkownikowi w celu realizacji umowy, przetwarzanie informacji dotyczących płatności, organizowanie wysyłki i dostarczanie użytkownikowi faktur i/lub potwierdzeń zamówienia, komunikowanie się z użytkownikiem, sprawdzanie zamówień pod kątem potencjalnego ryzyka lub oszustwa oraz, jeśli jest to zgodne z preferencjami udostępnionymi nam przez użytkownika, dostarczanie użytkownikowi informacji lub reklam dotyczących naszych produktów lub usług.</li>
+        <li><strong>Źródło gromadzenia danych:</strong> zebrane od użytkownika.</li>
+        <li><strong>Ujawnienie danych w celach biznesowych:</strong> udostępniane naszym podmiotom przetwarzającym dane: Bramka Płatnicza Axepta BNP Paribas.</li>
+    </ul>
+
+    <h3>Informacje dotyczące obsługi klienta</h3>
+    <ul>
+        <li><strong>Przykłady gromadzonych danych osobowych:</strong> Imię i nazwisko, adres wysyłki, numer telefonu, adres e-mail, adres rozliczeniowy, informacje dotyczące płatności (nie gromadzimy pełnego numeru karty kredytowej, a jedynie 4 ostatnie cyfry karty kredytowej).</li>
+        <li><strong>Cel gromadzenia danych:</strong> zapewnienie obsługi klienta i przetwarzanie zamówień klientów.</li>
+        <li><strong>Źródło gromadzenia danych:</strong> zebrane od użytkownika.</li>
+        <li><strong>Ujawnienie informacji w celach biznesowych:</strong> nie korzystamy z usług zewnętrznych dostawców w celu zapewnienia obsługi klienta.</li>
+    </ul>
+
+    <h2>Udostępnianie danych osobowych</h2>
+    <p>Dane osobowe użytkownika udostępniamy dostawcom usług, aby pomóc im w świadczeniu usług i realizacji umów z użytkownikiem, zgodnie z powyższym opisem. Na przykład:</p>
+    <ul>
+        <li>Do obsługi naszego sklepu internetowego używamy serwisu WordPress.</li>
+        <li>Możemy udostępniać Dane osobowe w celu zachowania zgodności z obowiązującym prawem i przepisami, w odpowiedzi na wezwania sądowe, nakazy przeszukania lub inne zgodne z prawem żądania dotyczące otrzymanych przez nas informacji, a także w celu ochrony naszych praw.</li>
+    </ul>
+
+    <h2>Reklama behawioralna</h2>
+    <p>Jak opisano powyżej, wykorzystujemy Państwa Dane Osobowe w celu dostarczania Państwu ukierunkowanych reklam lub informacji marketingowych, które naszym zdaniem mogą być dla Państwa interesujące. Na przykład:</p>
+    <ul>
+        <li>Korzystamy z <a href="https://analytics.google.com/" target="_blank" rel="noopener">Google Analytics</a>, aby pomóc nam zrozumieć, w jaki sposób nasi klienci korzystają z Witryny. Więcej informacji o tym, w jaki sposób Google wykorzystuje Dane osobowe użytkownika, można znaleźć tutaj: <a href="https://policies.google.com/privacy?hl=en.You" target="_blank" rel="noopener">Polityka Prywatności Google</a>. Można również zrezygnować z Google Analytics tutaj: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Wyłączenie Google Analytics</a>.</li>
+        <li>Udostępniamy naszym partnerom reklamowym informacje o korzystaniu przez użytkownika z Witryny, dokonanych przez niego zakupach oraz interakcjach z naszymi reklamami w innych witrynach internetowych. Niektóre z tych informacji zbieramy i udostępniamy bezpośrednio naszym partnerom reklamowym, a w niektórych przypadkach za pomocą plików cookie lub innych podobnych technologii (na które użytkownik może wyrazić zgodę, w zależności od swojej lokalizacji).</li>
+    </ul>
+    <p>Więcej informacji o tym, jak działa reklama ukierunkowana, można znaleźć na stronie edukacyjnej Network Advertising Initiative („NAI”) pod adresem: <a href="http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work" target="_blank" rel="noopener">How Does It Work</a>.</p>
+
+    <h3>Użytkownik może zrezygnować z otrzymywania reklam ukierunkowanych:</h3>
+    <ul>
+        <li><a href="https://www.facebook.com/settings/?tab=ads" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.google.com/settings/ads/anonymous" target="_blank" rel="noopener">Google</a></li>
+    </ul>
+    <p>Ponadto użytkownik może zrezygnować z niektórych z tych usług, odwiedzając portal rezygnacji Digital Advertising Alliance pod adresem: <a href="http://optout.aboutads.info/" target="_blank" rel="noopener">http://optout.aboutads.info/</a>.</p>
+
+    <h2>Wykorzystywanie danych osobowych</h2>
+    <p>Używamy Twoich danych osobowych, aby świadczyć Ci nasze usługi, które obejmują: oferowanie produktów do sprzedaży, przetwarzanie płatności, wysyłkę i realizację zamówienia oraz informowanie Cię na bieżąco o nowych produktach, usługach i ofertach.</p>
+
+    <h2>Podstawa prawna</h2>
+    <p>Zgodnie z ogólnym rozporządzeniem o ochronie danych osobowych („GDPR”), jeśli jesteś mieszkańcem Europejskiego Obszaru Gospodarczego („EOG”), przetwarzamy Twoje dane osobowe w oparciu o następujące podstawy prawne:</p>
+    <ul>
+        <li>Zgoda użytkownika;</li>
+        <li>Realizacja umowy między użytkownikiem a Witryną;</li>
+        <li>Zgodność z naszymi zobowiązaniami prawnymi;</li>
+        <li>W celu ochrony żywotnych interesów użytkownika;</li>
+        <li>W celu wykonania zadania realizowanego w interesie publicznym;</li>
+        <li>Ze względu na nasze uzasadnione interesy, które nie są ważniejsze od podstawowych praw i wolności użytkownika.</li>
+    </ul>
+
+    <h2>Retencja</h2>
+    <p>W przypadku złożenia zamówienia za pośrednictwem Strony, Dane osobowe użytkownika zostaną zachowane w naszej dokumentacji, chyba że i dopóki użytkownik nie poprosi nas o usunięcie tych informacji. Więcej informacji na temat prawa użytkownika do usunięcia danych można znaleźć w sekcji „Prawa użytkownika” poniżej.</p>
+
+    <h2>Automatyczne podejmowanie decyzji</h2>
+    <p>Jeśli użytkownik jest rezydentem EOG, ma prawo sprzeciwić się przetwarzaniu opartemu wyłącznie na zautomatyzowanym podejmowaniu decyzji (w tym profilowaniu), gdy takie podejmowanie decyzji wywołuje skutki prawne dla użytkownika lub w inny sposób znacząco na niego wpływa.</p>
+    <p>Nie angażujemy się w całkowicie zautomatyzowane podejmowanie decyzji z wykorzystaniem danych klientów, które mają skutki prawne lub inne istotne skutki.</p>
+    <p>Nasz podmiot przetwarzający dane Shopify korzysta z ograniczonego zautomatyzowanego podejmowania decyzji w celu zapobiegania oszustwom, które nie mają skutków prawnych ani innych istotnych skutków dla użytkownika.</p>
+    <p>Usługi, które zawierają elementy zautomatyzowanego podejmowania decyzji, obejmują:</p>
+    <ul>
+        <li>Tymczasowa lista adresów IP związanych z powtarzającymi się nieudanymi transakcjami. Ta lista pozostaje na liście przez niewielką liczbę godzin.</li>
+        <li>Tymczasowa lista zablokowanych kart kredytowych powiązanych z adresami IP umieszczonymi na liście zablokowanych kart kredytowych. Ta lista pozostaje na liście przez niewielką liczbę dni.</li>
+    </ul>
+
+    <h2>Prawa użytkownika</h2>
+
+    <h3>GDPR</h3>
+    <p>Jeżeli jesteś mieszkańcem EOG, masz prawo dostępu do przechowywanych przez nas Twoich Danych Osobowych, przeniesienia ich do nowej usługi oraz zażądania poprawienia, aktualizacji lub usunięcia Twoich Danych Osobowych. Aby skorzystać z tych praw, należy skontaktować się z nami, korzystając z poniższych danych kontaktowych:</p>
+    <div class="contact-info">
+        <p><strong>evatopcar Sp. Zoo</strong><br>
+        ul. Wierzbięcice 44a/42B<br>
+        61-538 Poznań, Polska<br>
+        <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+    </div>
+    <p>Twoje Dane Osobowe będą początkowo przetwarzane w Irlandii, a następnie zostaną przekazane poza Europę w celu przechowywania i dalszego przetwarzania, w tym do Kanady i Stanów Zjednoczonych. Więcej informacji na temat zgodności przekazywania danych z GDPR można znaleźć w dokumencie WordPress <a href="https://pl.wordpress.org/about/privacy/" target="_blank" rel="noopener">GDPR Whitepaper</a>.</p>
+
+    <h2>Pliki cookies</h2>
+    <p>Plik cookie to niewielka ilość informacji, która jest pobierana na komputer lub urządzenie użytkownika podczas odwiedzania naszej Witryny. Stosujemy wiele różnych plików cookie, w tym pliki funkcjonalne, wydajnościowe, reklamowe oraz pliki cookie mediów społecznościowych lub treści. Pliki cookie poprawiają komfort przeglądania Witryny, ponieważ umożliwiają zapamiętanie czynności i preferencji użytkownika (takich jak logowanie i wybór regionu). Oznacza to, że użytkownik nie musi wprowadzać tych informacji ponownie za każdym razem, gdy powraca do witryny lub przechodzi z jednej strony na drugą. Pliki cookie dostarczają również informacji o sposobie korzystania z witryny, na przykład o tym, czy użytkownik odwiedza witrynę po raz pierwszy, czy też jest częstym gościem.</p>
+    <p>Aby zoptymalizować korzystanie z Witryny i świadczone przez nas usługi, używamy następujących plików cookie.</p>
+
+    <h3>Niezbędne pliki cookie</h3>
+    <p>Te pliki cookie są niezbędne do poruszania się po witrynie i korzystania z jej funkcji, takich jak dostęp do bezpiecznych obszarów witryny. Witryna nie może działać poprawnie bez tych plików cookie.</p>
+
+    <h3>Funkcjonalne pliki cookie</h3>
+    <p>Te pliki cookie umożliwiają witrynie zapewnienie ulepszonej funkcjonalności i personalizacji. Mogą być ustalane przez nas lub przez zewnętrznych dostawców, których usługi dodaliśmy do naszych stron. Jeśli nie zezwolisz na te pliki cookie, niektóre lub wszystkie z tych usług mogą nie działać poprawnie.</p>
+
+    <h3>Wydajnościowe pliki cookie</h3>
+    <p>Te pliki cookie umożliwiają nam monitorowanie i ulepszanie działania naszej strony internetowej. Na przykład pozwalają nam zliczać wizyty, identyfikować źródła ruchu i sprawdzać, które części witryny cieszą się największą popularnością.</p>
+
+    <h3>Targetujące pliki cookie</h3>
+    <p>Te pliki cookie mogą być ustawiane za pośrednictwem naszej witryny przez naszych partnerów reklamowych. Mogą być wykorzystywane przez te firmy do budowania profilu Twoich zainteresowań i wyświetlania odpowiednich reklam w innych witrynach. Nie przechowują bezpośrednio danych osobowych, ale opierają się na jednoznacznej identyfikacji przeglądarki i urządzenia internetowego. Jeśli nie zezwolisz na te pliki cookie, będziesz doświadczać mniej ukierunkowanych reklam.</p>
+
+    <h3>Niesklasyfikowane pliki cookie</h3>
+    <p>Niesklasyfikowane pliki cookie to pliki cookie, które jesteśmy w trakcie klasyfikacji wraz z dostawcami poszczególnych plików cookie.</p>
+
+    <p>Użytkownik może kontrolować pliki cookie i zarządzać nimi na różne sposoby. Należy pamiętać, że usuwanie lub blokowanie plików cookie może negatywnie wpłynąć na komfort korzystania z witryny, a niektóre jej części mogą nie być w pełni dostępne.</p>
+    <p>Większość przeglądarek automatycznie akceptuje pliki cookie, ale użytkownik może zdecydować, czy chce akceptować pliki cookie, czy nie, korzystając z elementów sterujących przeglądarki, które często można znaleźć w menu „Narzędzia” lub „Preferencje” przeglądarki. Więcej informacji o tym, jak zmienić ustawienia przeglądarki lub jak blokować, zarządzać lub filtrować pliki cookie, można znaleźć w pliku pomocy przeglądarki lub na stronach takich jak <a href="https://www.allaboutcookies.org/" target="_blank" rel="noopener">www.allaboutcookies.org</a>.</p>
+    <p>Ponadto należy pamiętać, że blokowanie plików cookie nie może całkowicie uniemożliwić udostępniania informacji stronom trzecim, takim jak nasi partnerzy reklamowi. Aby skorzystać ze swoich praw lub zrezygnować z określonego sposobu wykorzystywania informacji przez te podmioty, należy postępować zgodnie z instrukcjami podanymi w sekcji „Reklama behawioralna” powyżej.</p>
+
+    <h2>Do Not Track</h2>
+    <p>Należy pamiętać, że ponieważ w branży nie ma jednolitego zrozumienia, jak reagować na sygnały „Do Not Track”, nie zmieniamy naszych praktyk gromadzenia danych i korzystania z nich w przypadku wykrycia takiego sygnału z przeglądarki użytkownika.</p>
+
+    <h2>Zmiany</h2>
+    <p>Możemy od czasu do czasu aktualizować niniejsze Zasady ochrony prywatności, aby odzwierciedlić na przykład zmiany w naszych praktykach lub z innych powodów operacyjnych, prawnych lub regulacyjnych.</p>
+    <p>Aby uzyskać więcej informacji na temat naszych praktyk w zakresie ochrony prywatności, w razie pytań lub w celu złożenia skargi, prosimy o kontakt za pośrednictwem poczty elektronicznej pod adresem <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a> lub pocztą, korzystając z danych podanych poniżej:</p>
+    <div class="contact-info">
+        <p><strong>Evatopcar Sp Zoo</strong><br>
+        ul.Wierzbięcice 44a/42B, 61-538 Poznań, Polska<br>
+        Numer VAT: PL7831898042<br>
+        Numer handlowy: 0001088411</p>
+    </div>
+    <p><strong>Ostatnia aktualizacja:</strong> 29 lutego 2024 r.</p>
+    <p>Jeśli nie jesteś zadowolony z naszej odpowiedzi na Twoją skargę, masz prawo złożyć skargę do odpowiedniego organu ochrony danych. Z lokalnym organem ochrony danych lub z naszym organem nadzorczym można się skontaktować pod adresem: <a href="mailto:kancelaria@uodo.gov.pl">kancelaria@uodo.gov.pl</a></p>
+    <p><a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener">https://ico.org.uk/make-a-complaint/</a></p>
+
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Konto</h4>
+            <ul>
+                <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Szybkie linki</h4>
+            <ul>
+                <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                <li><a href="{% url "main:about" %}">O nas</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Produkty</h4>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Catalog
+                    </a>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% cache 60 catalog_categories %}
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                        {% endcache %}
+                    </ul>
+                </li>
+                <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+            </ul>
+        </div>
+        <div class="footer-section company-info">
+            <h4>Evatopcar sp z.o.o</h4>
+            <p>KRS: 0001088411</p>
+            <p>Nip: 7831898042</p>
+            <p>Regon: 527791798</p>
+            <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+            <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+            <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+{% endblock %}
+

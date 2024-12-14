@@ -1,0 +1,511 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/index.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block modal_cart %}
+{% include "includes/cart_button.html" %}
+{% endblock  %}
+
+{% block content %}
+<section class='index'>
+<div>
+    <div class="custom-container">
+        <div class="custom-navbar-container" id="navbarSupportedContent" style="background-image: url('{% static 'deps/images/dost3.jpg' %}');">
+            <ul class="custom-navbar-list">
+              <h2>CO PROPONUJEMY</h2>
+          
+              <li class="custom-nav-item">
+                <a class="custom-nav-link" href="{% url 'configurate:input_view' %}">Dywaniki z Eva</a>
+              </li>
+          
+              <li class="custom-nav-item custom-dropdown">
+                <a class="custom-nav-link custom-dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Catalog
+                </a>
+                <ul class="custom-dropdown-menu">
+                  {% cache 60 catalog_categories %}
+                  {% tag_categories as categories %}
+                  {% for category in categories %}
+                  <li>
+                    <a class="custom-dropdown-item" href="{% url 'catalog:index' category.slug %}">{{ category.name }}</a>
+                  </li>
+                  {% endfor %}
+                  {% endcache %}
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+    <div class="custom-slideshow-container">
+        <div class="custom-slide custom-fade">
+            <img src="{% static 'deps/images/slides/slide1.jpg' %}" alt="Слайд 1">
+        </div>
+        <div class="custom-slide custom-fade">
+            <img src="{% static 'deps/images/slides/slide2.jpg' %}" alt="Слайд 2">
+        </div>
+        <div class="custom-slide custom-fade">
+            <img src="{% static 'deps/images/slides/slide3.jpg' %}" alt="Слайд 3">
+        </div>
+
+        <!-- Кнопки для листания -->
+        <a class="custom-prev" onclick="customChangeSlide(-1)">&#10094;</a>
+        <a class="custom-next" onclick="customChangeSlide(1)">&#10095;</a>
+    </div>
+</div>
+
+<hr class="gradient-border-line">
+
+<main>
+    <section class="info">
+        <h1>EvaCraft.pl</h1>
+        <p style="font-size: 18px; margin-bottom: 15px;">
+            Nasz młody zespół profesjonalistów od 2021 roku zajmuje się opracowywaniem i sprzedażą szpilek wykonanych z wysokiej jakości materiału EVA (znanego również jako EVA). 
+        </p>
+        <p style="font-size: 18px; margin-bottom: 15px;">
+            Od połowy 2022 roku działamy pod marką <strong>EVA CRAFT</strong>. Nasz warsztat produkcyjny, specjalizujący się w tworzeniu kilimków EVA, mieści się w sercu Polski – w Łodzi.
+        </p>
+        <p style="font-size: 18px; margin-bottom: 15px;">
+            Oferujemy dostawę naszych kilimków do dowolnego miejsca w Europie, zapewniając Państwu wygodę i najwyższą jakość!
+        </p>
+        <p style="font-size: 18px; text-align: center; margin-top: 30px;">
+            <em>Dołącz do grona naszych zadowolonych klientów!</em>
+        </p>
+    </section>
+    
+    <hr class="gradient-border-line">
+
+    <section class="gallery">
+        <h2>Галерея</h2>
+        <div class="gallery-container">
+            <div class="gallery-slideshow">
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery1.jpg' %}" alt="Галерея 1" onclick="openModal(0)">
+                </div>
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery2.jpg' %}" alt="Галерея 2" onclick="openModal(1)">
+                </div>
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery3.jpg' %}" alt="Галерея 3" onclick="openModal(2)">
+                </div>
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery4.jpg' %}" alt="Галерея 4" onclick="openModal(3)">
+                </div>
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery5.jpg' %}" alt="Галерея 5" onclick="openModal(4)">
+                </div>
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery6.jpg' %}" alt="Галерея 6" onclick="openModal(5)">
+                </div>
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery7.jpg' %}" alt="Галерея 7" onclick="openModal(6)">
+                </div>
+                <div class="gallery-slide">
+                    <img src="{% static 'deps/images/gallery/gallery8.jpg' %}" alt="Галерея 8" onclick="openModal(7)">
+                </div>
+            </div>
+            <button class="gallery-prev" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="gallery-next" onclick="changeSlide(1)">&#10095;</button>
+        </div>
+
+        <div id="galleryModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img id="modalImage" src="" alt="Галерея модальная">
+                <button class="modal-prev" onclick="changeModalSlide(-1)">&#10094;</button>
+                <button class="modal-next" onclick="changeModalSlide(1)">&#10095;</button>
+            </div>
+        </div>
+        
+
+        <div class="info-container">
+            <div class="info-item">
+                <i class="fas fa-truck"></i>
+                <div class="info-text">
+                    <h3>Dostawa</h3>
+                    <p>Zapewniamy dostawę</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-tag"></i>
+                <div class="info-text">
+                    <h3>Promocje</h3>
+                    <p>Codzienne promocje</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-credit-card"></i>
+                <div class="info-text">
+                    <h3>Bezpieczne płatności</h3>
+                    <p>Visa, Mastercard , Blik</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-gift"></i>
+                <div class="info-text">
+                    <h3>Pomysły na prezent</h3>
+                    <p>Mamy duży wybór</p>
+                </div>
+            </div>
+        </div>
+        
+        <hr class="gradient-border-line">
+
+        <div class="company-review-row-wrapper">
+            <div class="company-review-row">
+                <div class="company-profile-img">
+                    <img src="{% static 'deps/images/slides/slide1.jpg' %}" alt="EvaCraft">
+                </div>
+                <div class="company-profile-details">
+                    <div class="company-name">EvaCraft</div>
+                    <span class="company-stars">
+                        <span class="star filled"></span>
+                        <span class="star filled"></span>
+                        <span class="star filled"></span>
+                        <span class="star filled"></span>
+                        <span class="star filled"></span>
+                    </span>
+                    <div class="company-rating-text">
+                        <span class="nowrap"><strong>7 Google reviews</strong></span>
+                    </div>
+                    <div class="write-review-btn-container">
+                        <a href="" class="write-review-btn" target="_blank" rel="noopener">Write a review</a>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="reviews-container">
+                <div class="reviews-slideshow">
+                    <!-- Polish review 1 -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar-container">
+                                <img src="{% static 'deps/images/avatars/avatar1.jpg' %}" alt="Аватар" class="review-avatar">
+                            </div>
+                            <div class="review-details">
+                                <span class="review-name">Jan Kowalski</span>
+                                <span class="review-date">02.10.2024</span>
+                            </div>
+                            <i class="fab fa-google review-icon"></i>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-text">
+                            Bardzo szybka dostawa i doskonała obsługa klienta. Produkt spełnia moje oczekiwania.
+                            <span class="more-text">Polecam wszystkim, którzy szukają dobrych jakościowo produktów.</span>
+                        </div>
+                        <button class="read-more">Czytaj więcej</button>
+                    </div>
+                    <!-- Polish review 2 -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar-container">
+                                <img src="{% static 'deps/images/avatars/avatar1.jpg' %}" alt="Аватар" class="review-avatar">
+                            </div>
+                            <div class="review-details">
+                                <span class="review-name">Anna Nowak</span>
+                                <span class="review-date">03.10.2024</span>
+                            </div>
+                            <i class="fab fa-google review-icon"></i>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-text">
+                            Świetny serwis, wszystko poszło bardzo sprawnie. Jestem bardzo zadowolona z zakupu.
+                            <span class="more-text">Dzięki szybkiemu kontaktowi wszystko było załatwione w ekspresowym tempie.</span>
+                        </div>
+                        <button class="read-more">Czytaj więcej</button>
+                    </div>
+                    <!-- Polish review 3 -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar-container">
+                                <img src="{% static 'deps/images/avatars/avatar1.jpg' %}" alt="Аватар" class="review-avatar">
+                            </div>
+                            <div class="review-details">
+                                <span class="review-name">Piotr Zieliński</span>
+                                <span class="review-date">04.10.2024</span>
+                            </div>
+                            <i class="fab fa-google review-icon"></i>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-text">
+                            Bardzo dobre produkty, szybka dostawa i miła obsługa klienta.
+                            <span class="more-text">Na pewno wrócę po kolejne zakupy w przyszłości!</span>
+                        </div>
+                        <button class="read-more">Czytaj więcej</button>
+                    </div>
+                    <!-- Polish review 4 -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar-container">
+                                <img src="{% static 'deps/images/avatars/avatar1.jpg' %}" alt="Аватар" class="review-avatar">
+                            </div>
+                            <div class="review-details">
+                                <span class="review-name">Katarzyna Wiśniewska</span>
+                                <span class="review-date">05.10.2024</span>
+                            </div>
+                            <i class="fab fa-google review-icon"></i>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-text">
+                            Bardzo dobre produkty, szybka dostawa i miła obsługa klienta.
+                            <span class="more-text">Na pewno wrócę po kolejne zakupy w przyszłości!</span>
+                        </div>
+                        <button class="read-more">Czytaj więcej</button>
+                    </div>
+                    <!-- Polish review 5 -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar-container">
+                                <img src="{% static 'deps/images/avatars/avatar1.jpg' %}" alt="Аватар" class="review-avatar">
+                            </div>
+                            <div class="review-details">
+                                <span class="review-name">Tomasz Lewandowski</span>
+                                <span class="review-date">06.10.2024</span>
+                            </div>
+                            <i class="fab fa-google review-icon"></i>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-text">
+                            Dobry kontakt i bardzo szybka wysyłka. Produkt zgodny z opisem.
+                            <span class="more-text">Polecam każdemu, kto ceni sobie jakość i profesjonalizm.</span>
+                        </div>
+                        <button class="read-more">Czytaj więcej</button>
+                    </div>
+                    <!-- Ukrainian review -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar-container">
+                                <img src="{% static 'deps/images/avatars/avatar1.jpg' %}" alt="Аватар" class="review-avatar">
+                            </div>
+                            <div class="review-details">
+                                <span class="review-name">Олександр Коваль</span>
+                                <span class="review-date">07.10.2024</span>
+                            </div>
+                            <i class="fab fa-google review-icon"></i>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-text">
+                            Дуже задоволений покупкою, швидка доставка і чудова якість товару.
+                            <span class="more-text">Велике дякую за чудовий сервіс, обов'язково буду замовляти ще!</span>
+                        </div>
+                        <button class="read-more">Czytaj więcej</button>
+                    </div>
+                    <!-- Russian review -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-avatar-container">
+                                <img src="{% static 'deps/images/avatars/avatar1.jpg' %}" alt="Аватар" class="review-avatar">
+                            </div>
+                            <div class="review-details">
+                                <span class="review-name">Сергей Петров</span>
+                                <span class="review-date">08.10.2024</span>
+                            </div>
+                            <i class="fab fa-google review-icon"></i>
+                        </div>
+                        <div class="review-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-text">
+                            Всё прошло отлично, быстрая доставка и отличный товар.
+                            <span class="more-text">Спасибо за профессиональный подход и быструю обработку заказа.</span>
+                        </div>
+                        <button class="read-more">Czytaj więcej</button>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="gallery-prev1">&#10094;</button>
+                    <button class="gallery-next1">&#10095;</button>
+                </div>
+            </div>
+        </div>
+
+
+        
+        
+        
+    </section>
+</main>
+</div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.review-text').forEach(function(reviewText) {
+            const moreText = reviewText.querySelector('.more-text');
+            const readMoreButton = reviewText.nextElementSibling; // Находим кнопку под текстом
+    
+            // Скрыть кнопку, если нет дополнительного текста
+            if (!moreText || moreText.textContent.trim() === '') {
+                readMoreButton.classList.add('hidden');
+            }
+    
+            // Клик по кнопке для показа/скрытия текста
+            readMoreButton.addEventListener('click', function() {
+                if (reviewText.classList.contains('full-text')) {
+                    // Если текст уже раскрыт, скрываем его
+                    reviewText.classList.remove('full-text');
+                    this.textContent = 'Czytaj więcej'; // Меняем текст кнопки обратно
+                } else {
+                    // Показываем текст с внутренним скроллом
+                    reviewText.classList.add('full-text');
+                    this.textContent = 'Zwiń'; // Меняем текст кнопки на "Свернуть"
+                }
+            });
+        });
+    });
+    
+    
+    
+</script>
+<script>
+    let currentSlide = 0;
+    const images = [
+        "{% static 'deps/images/gallery/gallery1.jpg' %}",
+        "{% static 'deps/images/gallery/gallery2.jpg' %}",
+        "{% static 'deps/images/gallery/gallery3.jpg' %}",
+        "{% static 'deps/images/gallery/gallery4.jpg' %}",
+        "{% static 'deps/images/gallery/gallery5.jpg' %}",
+        "{% static 'deps/images/gallery/gallery6.jpg' %}",
+        "{% static 'deps/images/gallery/gallery7.jpg' %}",
+        "{% static 'deps/images/gallery/gallery8.jpg' %}"
+    ];
+
+    function openModal(index) {
+        currentSlide = index;
+        const modal = document.getElementById("galleryModal");
+        const modalImage = document.getElementById("modalImage");
+        
+        modalImage.src = images[currentSlide];
+        modal.classList.add("show");
+
+        setTimeout(() => {
+            modal.style.display = "flex";
+        }, 10);
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("galleryModal");
+        modal.classList.remove("show");
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 500);
+    }
+
+    function changeModalSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) {
+            currentSlide = images.length - 1;
+        } else if (currentSlide >= images.length) {
+            currentSlide = 0;
+        }
+        document.getElementById("modalImage").src = images[currentSlide];
+    }
+
+    
+    </script>
+<script src="{% static 'deps/js/index.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Konto</h4>
+            <ul>
+                <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Szybkie linki</h4>
+            <ul>
+                <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                <li><a href="{% url "main:about" %}">O nas</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Produkty</h4>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Catalog
+                    </a>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% cache 60 catalog_categories %}
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                        {% endcache %}
+                    </ul>
+                </li>
+                <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+            </ul>
+        </div>
+        <div class="footer-section company-info">
+            <h4>Evatopcar sp z.o.o</h4>
+            <p>KRS: 0001088411</p>
+            <p>Nip: 7831898042</p>
+            <p>Regon: 527791798</p>
+            <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+            <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+            <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+{% endblock %}
+
+

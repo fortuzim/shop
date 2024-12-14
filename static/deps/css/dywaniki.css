@@ -1,0 +1,371 @@
+/* Основной контейнер для картинки и формы */
+.product-config-wrapper {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+    margin: 2rem auto;
+    max-width: 1200px;
+    width: 90%;
+    background: #f8f8ff; /* Светлый фон с легким оттенком */
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1); /* Более мягкая тень */
+}
+
+/* Контейнер изображения */
+.image-container {
+    flex: 1;
+    max-width: 400px;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15); /* Усиленная тень для изображений */
+}
+
+/* Контейнер для формы */
+.form-container {
+    flex: 2;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+    border: 1px solid #dcdcdc;
+    padding: 2.5rem;
+}
+
+/* Заголовок формы */
+.form-container h1 {
+    font-size: 2.4rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+/* Стили групп полей формы */
+.form-group {
+    margin-bottom: 2.5rem;
+    margin-bottom: 20px;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавлена тень */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Увеличена тень при фокусе */
+}
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Стили для выбора формы */
+.shape-selection-container,
+.color-selection-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+}
+
+/* Оформление опций формы */
+.shape-option,
+.color-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 90px;
+    height: 110px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background-color 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+/* Выбранная опция */
+.shape-option.selected,
+.shape-option:hover,
+.color-option.selected,
+.color-option:hover {
+    border-color: #28a745;
+    background-color: #e9f9f2;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Более интенсивная тень */
+    transform: scale(1.05);
+}
+    
+.shape-option:hover,
+.color-option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Радио кнопки скрыты */
+.shape-radio,
+.color-radio {
+    display: none;
+}
+
+/* Элементы внутри опций */
+
+.shape-label,
+.color-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Центрирование содержимого по вертикали */
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem;
+}
+
+/* Оформление картинок */
+ 
+.shape-image,
+.color-image-container {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    background-size: cover;
+    background-position: center;
+    transition: border-color 0.3s;
+    margin: 0 auto; /* Центрирование изображения внутри блока */
+}
+
+.shape-image:hover,
+.color-image-container:hover,
+.color-image-container.selected{
+    border-color: #28a745;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Тень вокруг картинки */
+    transform: scale(1.1); /* Увеличение картинки при наведении */
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+    
+
+/* Стили для текста */
+.shape-text,
+.color-text {
+    font-size: 0.8rem;
+    color: #333;
+    font-weight: 600;
+    margin: 0; /* Удаление отступов по умолчанию */
+    text-align: center; /* Центрирование текста по горизонтали */
+}
+    
+/* Кнопка отправки */
+/* Кнопка отправки */
+.submit-btn {
+    display: inline-block;
+    padding: 0.4rem 0.7rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 700;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}
+
+.image_container_constructor {
+    position: relative;
+    width: 610px;
+    height: 400px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+/* Стили для изображений */
+.image_container_constructor img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Скрываем изображения по умолчанию */
+}
+
+.image_container_constructor img.active {
+    display: block; /* Отображаем активное изображение */
+}
+
+.image_container_constructor {
+    position: relative;
+    width: 610px;
+    height: 400px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+/* Стили для изображений */
+.image_container_constructor img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Скрываем изображения по умолчанию */
+}
+
+.image_container_constructor img.active {
+    display: block; /* Отображаем активное изображение */
+}
+
+
+
+.color-selection-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.color-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.color-radio {
+    display: none;
+}
+
+.color-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.color-image-container {
+    width: 50px;
+    height: 50px;
+    background-size: 200%; /* Увеличить изображение */
+    background-position: center; /* Центрирование картинки */
+    border-radius: 30px; /* Для красоты */
+    
+}
+
+.color-option.selected .color-image-container {
+    border-color: #000; /* Цвет границы для выбранного элемента */
+}
+
+.color-divider {
+    margin: 20px 0;
+}
+
+/* Стиль для выбранных цветов и материалов */
+.color-option.selected,
+.shape-option.selected {
+    border-color: #28a745;
+    background-color: #e9f9f2;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Более яркая тень для выделения */
+    transform: scale(1.1); /* Увеличение элемента для выделения */
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Увеличение картинки внутри выбранного цвета или формы */
+.color-option.selected .color-image-container,
+.shape-option.selected .shape-image {
+    border-color: #28a745;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Тень вокруг выбранной картинки */
+    transform: scale(1.1); /* Увеличение картинки */
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Основной медиазапрос для экранов меньше 1200px */
+@media (max-width: 1200px) {
+    .image_container_constructor {
+        width: 450px;
+        height: 350px;
+    }
+    .product-config-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 2.5rem;
+    }
+    .form-container h1 {
+        font-size: 2.2rem;
+    }
+    .shape-option,
+    .color-option {
+        width: 90px;
+        height: 110px;
+    }
+}
+
+/* Медиазапрос для экранов меньше 768px */
+@media (max-width: 768px) {
+    .image_container_constructor {
+        width: 375px;
+        height: 300px;
+    }
+    .product-config-wrapper {
+        padding: 2rem;
+        gap: 2rem;
+    }
+    .form-container h1 {
+        font-size: 2rem;
+    }
+    .form-control {
+        padding: 0.4rem 0.8rem;
+    }
+    .shape-option,
+    .color-option {
+        width: 80px;
+        height: 100px;
+    }
+}
+
+/* Медиазапрос для экранов меньше 480px */
+@media (max-width: 480px) {
+    .image_container_constructor {
+        width: 300px;
+        height: 250px;
+    }
+    .product-config-wrapper {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    .form-container h1 {
+        font-size: 1.7rem;
+    }
+    .shape-option,
+    .color-option {
+        width: 70px;
+        height: 90px;
+    }
+    .submit-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 1rem;
+    }
+}
+

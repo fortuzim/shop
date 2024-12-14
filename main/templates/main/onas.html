@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+{% endblock %}
+
+
+{% block content %}
+    <!-- Sekcja "O nas" -->
+    <section class="section about-us">
+        <div class="image">
+            <img src="{% static 'images/your-image.jpg' %}" alt="EvatopCar">
+        </div>
+        <div class="content">
+            <h2>Witamy w EvaCraft</h2>
+            <p>Witamy w EvatopCar – firmie specjalizującej się w produkcji dywaników samochodowych EVA. Jesteśmy dumni z oferowania wysokiej jakości produktów, które nie tylko doskonale chronią wnętrze Twojego pojazdu, ale także dodają mu elegancji.</p>
+            <p>Nasze maty EVA są projektowane z myślą o trwałości i łatwości utrzymania. Dzięki innowacyjnym technologiom i starannej produkcji zapewniamy naszym klientom produkty, które spełniają najwyższe standardy.</p>
+            <p>Wybierz EvatopCar, aby zadbać o komfort i estetykę wnętrza swojego samochodu. Nasze maty EVA to nie tylko praktyczne rozwiązanie, ale także stylowy dodatek do Twojego pojazdu.</p>
+            <p>Dziękujemy za zainteresowanie EvatopCar – Twoim partnerem w ochronie i stylizacji wnętrza samochodu!</p>
+        </div>
+    </section>
+
+    <!-- Sekcja "Fakty o nas" -->
+    <section class="section facts">
+        <h2>Fakty o nas</h2>
+        <ul class="facts-list">
+            <li>EvaCraft – producent dywaników EVA do samochodów z siedzibą w Poznaniu.</li>
+            <li>EvaCraft – spółka z ograniczoną odpowiedzialnością, płatnik VAT. Ceny naszych produktów są ustalane zgodnie z wymogami polskiego prawa.</li>
+            <li>EvaCraft – produkujemy klasyczne dywaniki (2D), dywaniki z bokami (3D), dywaniki do bagażnika i organizery.</li>
+            <li>EvaCraft – to usługa skoncentrowana na maksymalnej orientacji na klienta i profesjonalne podejście. Szybko przyjmujemy zamówienia i dostarczamy je do Państwa.</li>
+            <li>EvaCraft – pełny cykl produkcji, od pobrania wzorów (jeżeli modelu auta nie ma w naszej bazie szablonów), wyboru kolorów materiału i obszycia do montażu dywaników. Otrzymują Państwo zadbany salon autka. Zapraszamy do kontaktu!</li>
+            <li>EvaCraft – gwarantujemy, że otrzymają Państwo wysokiej jakości produkt, który podkreśli charakter Państwa samochodu.</li>
+            <li>EvaCraft – nasze ceny zawierają wszystkie niezbędne elementy (klipsy, pięty, rzepy, dodatkowe elementy mocowania), dlatego nie będzie Państwu potrzebne dodatkowe opłaty.</li>
+            <li>EvaCraft – współpracujemy bezpośrednio z najlepszymi producentami płyt EVA, taśm, nici, elementów mocowania. Dlatego jesteśmy pewni, że klient otrzyma wysokiej jakości produkt do swojego samochodu.</li>
+            <li>EvaCraft – odbiór towaru jest możliwy zarówno przez odbiór osobisty, jak i dostawę kurierską, zależnie od rozmiaru produktu.</li>
+            <li>EvaCraft – obsługujemy podstawowe metody płatności (Blik, karta płatnicza, Szybki Przelew, Google Pay, Apple Pay).</li>
+        </ul>
+    </section>
+
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Konto</h4>
+            <ul>
+                <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Szybkie linki</h4>
+            <ul>
+                <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                <li><a href="{% url "main:about" %}">O nas</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Produkty</h4>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Catalog
+                    </a>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% cache 60 catalog_categories %}
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                        {% endcache %}
+                    </ul>
+                </li>
+                <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+            </ul>
+        </div>
+        <div class="footer-section company-info">
+            <h4>Evatopcar sp z.o.o</h4>
+            <p>KRS: 0001088411</p>
+            <p>Nip: 7831898042</p>
+            <p>Regon: 527791798</p>
+            <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+            <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+            <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+{% endblock %}
+

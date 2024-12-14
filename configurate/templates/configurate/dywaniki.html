@@ -1,0 +1,693 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cache %}
+{% load goods_tags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/dywaniki.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+
+
+{% block modal_cart %}
+{% include "includes/cart_button.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="product-config-wrapper">
+    <div class="form-container">
+        <h1>Skonfiguruj komplet</h1>
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Поле выбора комплекта -->
+            <div class="form-group">
+                <label for="{{ form.complete_set.id_for_label }}">1. Wybierz komplet:</label>
+                <select id="{{ form.complete_set.id_for_label }}" name="{{ form.complete_set.html_name }}" class="form-control">
+                    {% for value, display in form.complete_set.field.choices %}
+                        <option value="{{ value }}" {% if form.complete_set.value == value %}selected{% endif %}>
+                            {{ display }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if form.complete_set.errors %}
+                    <div class="form-error">
+                        {% for error in form.complete_set.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Поле выбора маты -->
+            <div class="form-group">
+                <label for="{{ form.mat.id_for_label }}">2. Wybierz matę:</label>
+                <select id="{{ form.mat.id_for_label }}" name="{{ form.mat.html_name }}" class="form-control">
+                    {% for value, display in form.mat.field.choices %}
+                        <option value="{{ value }}" {% if form.mat.value == value %}selected{% endif %}>
+                            {{ display }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if form.mat.errors %}
+                    <div class="form-error">
+                        {% for error in form.mat.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Поле выбора формы -->
+            <div class="product-config-step" id="shape-select">
+                <label for="shape" class="product-config-label">Wybierz kształt komórek:</label><br>
+                <div class="shape-selection-container">
+                    <div class="shape-option{% if form.shape.value == 'Romby' %} selected{% endif %}">
+                        <input type="radio" name="{{ form.shape.name }}" id="shape_Romby" value="Romby" class="shape-radio" checked />
+                        <label for="shape_Romby" class="shape-label">
+                            <div class="shape-image" style="background-image: url('{% static 'deps/images/shape/romby.png' %}');" title="Romby"></div>
+                            <span class="shape-text">Romby</span>
+                        </label>
+                    </div>
+                    <div class="shape-option{% if form.shape.value == 'Soty' %} selected{% endif %}">
+                        <input type="radio" name="{{ form.shape.name }}" id="shape_Soty" value="Soty" class="shape-radio" {% if form.shape.value == 'Soty' %}checked{% endif %} />
+                        <label for="shape_Soty" class="shape-label">
+                            <div class="shape-image" style="background-image: url('{% static 'deps/images/shape/soty.png' %}');" title="Soty"></div>
+                            <span class="shape-text">Soty</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+                        <!-- Поле выбора цвета обшивки (obszycie) -->
+            <div class="form-group">
+                <label for="{{ form.color.id_for_label }}">Kolor obszycia:</label>
+                <div class="color-selection-container obszycie-selection" id="obszycie-options">
+                    {% for value, display in form.color.field.choices %}
+                    {% if value %}
+                        <div class="color-option obszycie-option{% if form.color.value == value %} selected{% endif %}" data-obszycie-value="{{ value }}">
+                            <input type="radio" id="obszycie_{{ value }}" name="{{ form.color.name }}" value="{{ value }}" 
+                            {% if form.color.value == value %}checked{% endif %} class="color-radio">
+                            <label for="obszycie_{{ value }}" class="color-label">
+                                <div class="color-image-container" style="background-image: url('{% static 'deps/images/colors/'|add:value|add:'.png' %}');"></div>
+                                <div class="color-text">{{ display }}</div>
+                            </label>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Поле выбора цвета коврика (dywanika) -->
+            <div class="form-group">
+                <label for="{{ form.carpet_color.id_for_label }}" class="product-config-label">Kolor dywanika:</label>
+                <div class="color-selection-container dywanik-selection" id="carpet-options">
+                    <!-- Здесь будут динамически добавляться коврики -->
+                </div>
+            </div>
+
+            <!-- Поле выбора марки авто -->
+            <div class="form-group">
+                <label for="id_car_brand">Выберите марку авто:</label>
+                <select id="id_car_brand" name="{{ form.car_brand.html_name }}" class="form-control" onchange="showFields()">
+                    <option value="">-- Выберите марку --</option>
+                    {% for value, display in form.car_brand.field.choices %}
+                        <option value="{{ value }}" {% if form.car_brand.value == value %}selected{% endif %}>
+                            {{ display }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if form.car_brand.errors %}
+                    <div class="form-error">
+                        {% for error in form.car_brand.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Поле выбора модели авто -->
+            <div class="form-group" id="car_model_group" style="display:none;">
+                <label for="id_car_model">Выберите модель auta:</label>
+                <select id="id_car_model" name="{{ form.car_model.html_name }}" class="form-control">
+                    <option value="">-- Выберите модель --</option>
+                    {% for value, display in form.car_model.field.choices %}
+                        <option value="{{ value }}" {% if form.car_model.value == value %}selected{% endif %}>
+                            {{ display }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if form.car_model.errors %}
+                    <div class="form-error">
+                        {% for error in form.car_model.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Поле выбора года производства -->
+            <div class="form-group" id="production_year_group" style="display:none;">
+                <label for="{{ form.production_year.id_for_label }}">Rok produkcji:</label>
+                <select id="{{ form.production_year.id_for_label }}" name="{{ form.production_year.html_name }}" class="form-control">
+                    <option value="">-- Выберите год --</option>
+                    {% for value, display in form.production_year.field.choices %}
+                        <option value="{{ value }}" {% if form.production_year.value == value %}selected{% endif %}>
+                            {{ display }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if form.production_year.errors %}
+                    <div class="form-error">
+                        {% for error in form.production_year.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <!-- Картинка продукта -->
+        <div id="image_container_constructor" class="image_container_constructor">
+            <!-- Изображение для формы "Romby" -->
+            <input type="hidden" id="selectedImageUrl" name="selected_image_url" value="">
+            <img id="rombyImage" class="form-image active" 
+                src="https://www.evadywaniki.pl/cache/goods_constructor/610x400x0x614c60f160cd7.png" alt="Romby Image" style="display: none;">
+            <!-- Изображение для формы "Soty" -->
+            <img id="sotyImage" class="form-image" 
+                src="https://www.evadywaniki.pl/cache/goods_constructor/610x400x0x614c5cb293f80.png" alt="Soty Image" style="display: none;">
+            <img id="obszycieImage" src="" alt="Obszcie Image" style="display:none;">
+
+        </div>
+
+            <!-- Кнопка отправки -->
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const obszycieOptions = document.querySelectorAll('.obszycie-option');
+        const carpetOptionsContainer = document.getElementById('carpet-options');
+        const rombyImage = document.getElementById('rombyImage');
+        const sotyImage = document.getElementById('sotyImage');
+        const obszycieImage = document.getElementById('obszycieImage'); // Новый элемент для обшивки
+
+    
+        // Путь к изображениям для обшивки (общий для всех форм коврика)
+        const obszycieImages = {
+            'Czarny': '/static/deps/images/obszycie/Czarny.png',
+            'Grafitowy': '/static/deps/images/obszycie/Grafitowy.png',
+            'Srebrny': '/static/deps/images/obszycie/Srebrny.png',
+            'Biały': '/static/deps/images/obszycie/Biały.png',
+            'Cytrynowy': '/static/deps/images/obszycie/Cytrynowy.png',
+            'Pomarańczowy': '/static/deps/images/obszycie/Pomarańczowy.png',
+            'Czerwony': '/static/deps/images/obszycie/Czerwony.png',
+            'Ciemno chabrowy': '/static/deps/images/obszycie/Ciemno chabrowy.png',
+            'Chabrowy': '/static/deps/images/obszycie/Chabrowy.png',
+            'Jasno chabrowy': '/static/deps/images/obszycie/Jasno chabrowy.png',
+            'Jagodowy': '/static/deps/images/obszycie/Jagodowy.png',
+            'Purpurowy': '/static/deps/images/obszycie/Purpurowy.png',
+            'Liliowy': '/static/deps/images/obszycie/Liliowy.png',
+            'Różowy': '/static/deps/images/obszycie/Różowy.png',
+            'Kremowy': '/static/deps/images/obszycie/Kremowy.png',
+            'Ciemno czekoladowy': '/static/deps/images/obszycie/Ciemno czekoladowy.png',
+            'Jasno czekoladowy': '/static/deps/images/obszycie/Jasno czekoladowy.png',
+            'Miedziany': '/static/deps/images/obszycie/Miedziany.png',
+            'Malachitowy': '/static/deps/images/obszycie/Grafitowy.png',
+            'Khaki': '/static/deps/images/obszycie/Khaki.png',
+            'Limonkowy': '/static/deps/images/obszycie/Limonkowy.png',
+            'Zielony': '/static/deps/images/obszycie/Zielony.png',
+            'Burgund': '/static/deps/images/obszycie/Burgund.png',
+        };
+    
+        // Путь к изображениям ковриков в зависимости от формы и цвета коврика
+        const carpetImages = {
+            'Romby': {
+                'Czarny': '/static/deps/images/dywaniki/romby/Czarny.png',
+                'Grafitowy': '/static/deps/images/dywaniki/romby/Grafitowy.png',
+                'Czekoladowy': '/static/deps/images/dywaniki/romby/Czekoladowy.png',
+                'Kremowy': '/static/deps/images/dywaniki/romby/Kremowy.png',
+                'Atramentowy': '/static/deps/images/dywaniki/romby/Atramentowy.png',
+                'Burgund': '/static/deps/images/dywaniki/romby/Burgund.png',
+                'Chabrowy': '/static/deps/images/dywaniki/romby/Chabrowy.png',
+                'Cytrynowy': '/static/deps/images/dywaniki/romby/Cytrynowy.png',
+                'Czerwony': '/static/deps/images/dywaniki/romby/Czerwony.png',
+                'Limonkowy': '/static/deps/images/dywaniki/romby/Limonkowy.png',
+                'Malachitowy': '/static/deps/images/dywaniki/romby/Malachitowy.png',
+                'Orzechowy': '/static/deps/images/dywaniki/romby/Orzechowy.png',
+                'Pomarańczowy': '/static/deps/images/dywaniki/romby/Pomarańczowy.png',
+                'Purpurowy': '/static/deps/images/dywaniki/romby/Purpurowy.png',
+                'Różowy': '/static/deps/images/dywaniki/romby/Różowy.png',
+                
+            },
+            'Soty': {
+                'Czarny': '/static/deps/images/dywaniki/soty/Czarny.png',
+                'Grafitowy': '/static/deps/images/dywaniki/soty/Grafitowy.png',
+                'Czekoladowy': '/static/deps/images/dywaniki/soty/Czekoladowy.png',
+                'Kremowy': '/static/deps/images/dywaniki/soty/Kremowy.png',
+                'Atramentowy': '/static/deps/images/dywaniki/soty/Atramentowy.png',
+                'Burgund': '/static/deps/images/dywaniki/soty/Burgund.png',
+                'Chabrowy': '/static/deps/images/dywaniki/soty/Chabrowy.png',
+                'Cytrynowy': '/static/deps/images/dywaniki/soty/Cytrynowy.png',
+                'Czerwony': '/static/deps/images/dywaniki/soty/Czerwony.png',
+                'Malachitowy': '/static/deps/images/dywaniki/soty/Malachitowy.png',
+                'Purpurowy': '/static/deps/images/dywaniki/soty/Purpurowy.png',
+            }
+        };
+    
+        // Установите значение по умолчанию на черный цвет
+        let defaultColor = 'Czarny';
+        let selectedColor = defaultColor;
+        let selectedShape = 'Romby'; // Установите форму коврика по умолчанию
+
+        function updateObszycieImage(color) {
+            const imageUrl = obszycieImages[color];
+            if (imageUrl) {
+                obszycieImage.src = imageUrl;
+                obszycieImage.style.display = 'block'; // Показать изображение обшивки
+            }
+        }
+
+        function updateCarpetImage(shape, color) {
+            const imageUrl = carpetImages[shape]?.[color];
+            if (imageUrl) {
+                rombyImage.style.display = shape === 'Romby' ? 'block' : 'none';
+                sotyImage.style.display = shape === 'Soty' ? 'block' : 'none';
+        
+                if (shape === 'Romby') {
+                    rombyImage.src = imageUrl;
+                } else {
+                    sotyImage.src = imageUrl;
+                }
+        
+                document.getElementById('selectedImageUrl').value = imageUrl;
+            }
+        }
+
+        // Обработчики выбора обшивки
+        obszycieOptions.forEach(option => {
+            option.addEventListener('click', function () {
+                obszycieOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+
+                const color = this.getAttribute('data-obszycie-value');
+                updateObszycieImage(color); // Обновляем изображение обшивки
+            });
+        });
+
+        // Обработчик выбора формы коврика
+        const shapeRadios = document.querySelectorAll('input[name="{{ form.shape.name }}"]');
+        shapeRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                selectedShape = this.value;
+                updateCarpetImage(selectedShape, selectedColor);
+            });
+        });
+
+        // Обработчики выбора цвета коврика
+        carpetOptionsContainer.addEventListener('click', function (event) {
+            const carpetOption = event.target.closest('.dywanik-option');
+            if (carpetOption) {
+                document.querySelectorAll('.dywanik-option').forEach(opt => opt.classList.remove('selected'));
+                carpetOption.classList.add('selected');
+
+                selectedColor = carpetOption.getAttribute('data-value');
+                updateCarpetImage(selectedShape, selectedColor);
+            }
+        });
+
+        // Инициализация изображений при загрузке страницы
+        selectedShape = document.querySelector('input[name="{{ form.shape.name }}"]:checked').value || 'Romby';
+        const initialColor = document.querySelector('.dywanik-option.selected')?.getAttribute('data-value') || defaultColor;
+        selectedColor = initialColor;
+
+        updateCarpetImage(selectedShape, initialColor);
+        updateObszycieImage(defaultColor); // Установка изображения обшивки по умолчанию
+    });
+        
+</script>
+  
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const shapeRadios = document.querySelectorAll('input[name="{{ form.shape.name }}"]');
+        const carpetOptionsContainer = document.getElementById('carpet-options');
+        const obszycieOptions = document.querySelectorAll('.obszycie-option');
+
+        // Наборы ковриков для каждой формы в разных папках
+        const rombyCarpetOptions = {
+            'Czarny': {
+                label: 'Czarny',
+                img: '/static/deps/images/carpets/romby/Czarny.png'
+            },
+            'Grafitowy': {
+                label: 'Grafitowy',
+                img: '/static/deps/images/carpets/romby/Grafitowy.png'
+            },
+            'Czekoladowy': {
+                label: 'Czekoladowy',
+                img: '/static/deps/images/carpets/romby/Czekoladowy.png'
+            },
+            'Kremowy': {
+                label: 'Kremowy',
+                img: '/static/deps/images/carpets/romby/Kremowy.png'
+            },
+            'Atramentowy': {
+                label: 'Atramentowy',
+                img: '/static/deps/images/carpets/romby/Atramentowy.png'
+            },
+            'Burgund': {
+                label: 'Burgund',
+                img: '/static/deps/images/carpets/romby/Burgund.png'
+            },
+            'Chabrowy': {
+                label: 'Chabrowy',
+                img: '/static/deps/images/carpets/romby/Chabrowy.png'
+            },
+            'Cytrynowy': {
+                label: 'Cytrynowy',
+                img: '/static/deps/images/carpets/romby/Cytrynowy.png'
+            },
+            'Czerwony': {
+                label: 'Czerwony',
+                img: '/static/deps/images/carpets/romby/Czerwony.png'
+            },
+            'Limonkowy': {
+                label: 'Limonkowy',
+                img: '/static/deps/images/carpets/romby/Limonkowy.png'
+            },
+            'Malachitowy': {
+                label: 'Malachitowy',
+                img: '/static/deps/images/carpets/romby/Malachitowy.png'
+            },
+            'Orzechowy': {
+                label: 'Orzechowy',
+                img: '/static/deps/images/carpets/romby/Orzechowy.png'
+            },
+            'Pomarańczowy': {
+                label: 'Pomarańczowy',
+                img: '/static/deps/images/carpets/romby/Pomarańczowy.png'
+            },
+            'Purpurowy': {
+                label: 'Purpurowy',
+                img: '/static/deps/images/carpets/romby/Purpurowy.png'
+            },
+            'Różowy': {
+                label: 'Różowy',
+                img: '/static/deps/images/carpets/romby/Różowy.png'
+            },
+            
+        };
+
+        const sotyCarpetOptions = {
+            'Czarny': {
+                label: 'Czarny',
+                img: '/static/deps/images/carpets/soty/Czarny.png'
+            },
+            'Grafitowy': {
+                label: 'Grafitowy',
+                img: '/static/deps/images/carpets/soty/Grafitowy.png'
+            },
+            'Czekoladowy': {
+                label: 'Czekoladowy',
+                img: '/static/deps/images/carpets/soty/Czekoladowy.png'
+            },
+            'Kremowy': {
+                label: 'Kremowy',
+                img: '/static/deps/images/carpets/soty/Kremowy.png'
+            },
+            'Atramentowy': {
+                label: 'Atramentowy',
+                img: '/static/deps/images/carpets/soty/Atramentowy.png'
+            },
+            'Burgund': {
+                label: 'Burgund',
+                img: '/static/deps/images/carpets/soty/Burgund.png'
+            },
+            'Chabrowy': {
+                label: 'Chabrowy',
+                img: '/static/deps/images/carpets/soty/Chabrowy.png'
+            },
+            'Cytrynowy': {
+                label: 'Cytrynowy',
+                img: '/static/deps/images/carpets/soty/Cytrynowy.png'
+            },
+            'Czerwony': {
+                label: 'Czerwony',
+                img: '/static/deps/images/carpets/soty/Czerwony.png'
+            },
+            'Malachitowy': {
+                label: 'Malachitowy',
+                img: '/static/deps/images/carpets/soty/Malachitowy.png'
+            },
+            'Purpurowy': {
+                label: 'Purpurowy',
+                img: '/static/deps/images/carpets/soty/Purpurowy.png'
+            },
+            
+        };
+
+        // Функция для обновления ковриков в зависимости от выбранной формы
+        function updateCarpetOptions(shape) {
+            const selectedCarpetOptions = shape === 'Romby' ? rombyCarpetOptions : sotyCarpetOptions;
+            const selectedCarpetValue = document.querySelector('input[name="carpet_color"]:checked')?.value;
+
+            carpetOptionsContainer.innerHTML = ''; // Очищаем старые опции
+
+            // Добавляем новые опции ковриков
+            Object.entries(selectedCarpetOptions).forEach(([value, { label, img }]) => {
+                const isSelected = value === selectedCarpetValue ? 'selected' : ''; // Проверяем, был ли этот коврик выбран
+
+                const option = `
+                    <div class="color-option dywanik-option ${isSelected}" data-value="${value}">
+                        <input type="radio" id="dywanik_${value}" name="carpet_color" value="${value}" class="color-radio" ${isSelected ? 'checked' : ''}>
+                        <label for="dywanik_${value}" class="color-label">
+                            <div class="color-image-container" style="background-image: url('${img}');"></div>
+                            <div class="color-text">${label}</div>
+                        </label>
+                    </div>`;
+                carpetOptionsContainer.innerHTML += option;
+            });
+
+            // Добавляем обработчики клика для новых ковриков
+            const carpetOptions = document.querySelectorAll('.dywanik-option');
+            carpetOptions.forEach(option => {
+                option.addEventListener('click', function () {
+                    // Убираем класс selected со всех опций
+                    carpetOptions.forEach(opt => opt.classList.remove('selected'));
+
+                    // Добавляем класс selected на выбранную опцию
+                    this.classList.add('selected');
+
+                    // Обновляем значение радио-кнопки
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                });
+            });
+        }
+
+        // Обработчик для выделения цвета обшивки
+        obszycieOptions.forEach(option => {
+            option.addEventListener('click', function () {
+                obszycieOptions.forEach(opt => opt.classList.remove('selected')); // Сбрасываем класс для всех опций
+                this.classList.add('selected'); // Добавляем класс к выбранной опции
+                this.querySelector('input[type="radio"]').checked = true; // Устанавливаем радио-кнопку
+            });
+        });
+
+        // Обработчик событий для формы
+        shapeRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                updateCarpetOptions(this.value);
+            });
+        });
+
+        // Инициализируем коврики при загрузке страницы
+        const initialShape = document.querySelector('input[name="{{ form.shape.name }}"]:checked').value;
+        updateCarpetOptions(initialShape);
+    });
+</script>
+
+
+
+
+<script>
+    function showFields() {
+        var carBrandSelect = document.getElementById('id_car_brand');
+        var carModelGroup = document.getElementById('car_model_group');
+        var productionYearGroup = document.getElementById('production_year_group');
+
+        // Show car model field if a brand is selected
+        if (carBrandSelect.value) {
+            carModelGroup.style.display = 'block';
+        } else {
+            carModelGroup.style.display = 'none';
+            productionYearGroup.style.display = 'none'; // Hide the production year if no brand selected
+            return; // Exit function if no brand selected
+        }
+
+        // Show production year field when a model is selected
+        var carModelSelect = document.getElementById('id_car_model');
+        carModelSelect.onchange = function() {
+            if (carModelSelect.value) {
+                productionYearGroup.style.display = 'block';
+            } else {
+                productionYearGroup.style.display = 'none';
+            }
+        };
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            const firstOption = select.querySelector('option[value=""]');
+            if (firstOption) {
+                firstOption.remove();
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const carBrandSelect = document.querySelector('select[name="car_brand"]');
+        const carModelSelect = document.querySelector('select[name="car_model"]');
+
+        // Передача данных о моделях в JavaScript
+        const carModelsByBrand = {
+            {% for brand, models in car_model_choices.items %}
+            "{{ brand }}": [
+                {% for model in models %}
+                ["{{ model.0 }}", "{{ model.1 }}"],
+                {% endfor %}
+            ],
+            {% endfor %}
+        };
+
+        // Обработчик изменения бренда
+        carBrandSelect.addEventListener('change', function() {
+            const selectedBrand = carBrandSelect.value;
+            const models = carModelsByBrand[selectedBrand] || [];
+            
+            // Очищаем текущие опции
+            carModelSelect.innerHTML = '<option value="">Select a model</option>';
+
+            // Добавляем новые опции
+            models.forEach(function(model) {
+                const option = document.createElement('option');
+                option.value = model[0];
+                option.textContent = model[1];
+                carModelSelect.appendChild(option);
+            });
+        });
+    });
+</script>
+
+<script>
+    const shapeOptions = document.querySelectorAll('.shape-option');
+
+    shapeOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove 'selected' class from other shape options
+            shapeOptions.forEach(opt => opt.classList.remove('selected'));
+            // Add 'selected' class to clicked option
+            this.classList.add('selected');
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Обработчик для выбора obszycie
+        document.querySelectorAll('.obszycie-selection .color-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                // Сброс стилей у всех элементов
+                document.querySelectorAll('.obszycie-selection .color-option').forEach(function(opt) {
+                    opt.classList.remove('selected');
+                });
+                // Добавление стиля к выбранному элементу
+                option.classList.add('selected');
+            });
+        });
+    
+        // Обработчик для выбора dywanik
+        document.querySelectorAll('.dywanik-selection .color-option').forEach(function(option) {
+            option.addEventListener('click', function() {
+                // Сброс стилей у всех элементов
+                document.querySelectorAll('.dywanik-selection .color-option').forEach(function(opt) {
+                    opt.classList.remove('selected');
+                });
+                // Добавление стиля к выбранному элементу
+                option.classList.add('selected');
+            });
+        });
+    });
+    
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+        if (select.options[0].value === "") {
+            select.remove(0);  // Убираем первый элемент
+        }
+    });
+});
+</script>
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>Konto</h4>
+            <ul>
+                <li><a href="{% url "user:profile" %}">Zamówienie</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Szybkie linki</h4>
+            <ul>
+                <li><a href="{% url "user:users_cart" %}">Koszyk</a></li>
+                <li><a href="{% url "main:privacy" %}">Polityka prywatności</a></li>
+                <li><a href="{% url "main:regulamin" %}">Regulamin sklepu</a></li>
+                <li><a href="{% url "main:about" %}">O nas</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Produkty</h4>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Catalog
+                    </a>
+                    <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
+                        {% cache 60 catalog_categories %}
+                        {% tag_categories as categories %}
+                        {% for category in categories %}
+                            <li><a class="dropdown-item text-white" href="{% url "catalog:index" category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                        {% endcache %}
+                    </ul>
+                </li>
+                <li><a href="{% url "configurate:input_view" %}">Dywaniki z Eva</a></li>
+            </ul>
+        </div>
+        <div class="footer-section company-info">
+            <h4>Evatopcar sp z.o.o</h4>
+            <p>KRS: 0001088411</p>
+            <p>Nip: 7831898042</p>
+            <p>Regon: 527791798</p>
+            <p>Wierzbięcice 44A / 42B, 61-538 Poznań, Polska</p>
+            <p>Telefon: <a href="tel:+48789662179">789 662 179</a></p>
+            <p>Email: <a href="mailto:evatopcar@gmail.com">evatopcar@gmail.com</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Evatopcar sp z.o.o. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+{% endblock %}

@@ -128,14 +128,14 @@
                                                         {% if item.product.slug %}
                                                             <a class="text-white" href="{% url 'goods:product' item.product.slug %}">{{ item.product.name }}</a>
                                                         {% else %}
-                                                            {{ item.configuration.complete_set }}
+                                                            {{ item.configuration.is_complete_set }}
                                                         {% endif %}
                                                     </td>
                                                     <td>
                                                         {% if item.product %}
                                                             {{ item.quantity }}
                                                         {% elif item.configuration %}
-                                                            {{ item.configuration.quantity_available }}
+                                                            {{ item.configuration.available_quantity }}
                                                         {% endif %}
                                                     </td>
                                                     <td>{{ item.price }}</td>

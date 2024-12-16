@@ -25,17 +25,17 @@
             
             <!-- Поле выбора комплекта -->
             <div class="form-group">
-                <label for="{{ form.complete_set.id_for_label }}">1. Wybierz komplet:</label>
-                <select id="{{ form.complete_set.id_for_label }}" name="{{ form.complete_set.html_name }}" class="form-control">
-                    {% for value, display in form.complete_set.field.choices %}
-                        <option value="{{ value }}" {% if form.complete_set.value == value %}selected{% endif %}>
+                <label for="{{ form.is_complete_set.id_for_label }}">1. Wybierz komplet:</label>
+                <select id="{{ form.is_complete_set.id_for_label }}" name="{{ form.is_complete_set.html_name }}" class="form-control">
+                    {% for value, display in form.is_complete_set.field.choices %}
+                        <option value="{{ value }}" {% if form.is_complete_set.value == value %}selected{% endif %}>
                             {{ display }}
                         </option>
                     {% endfor %}
                 </select>
-                {% if form.complete_set.errors %}
+                {% if form.is_complete_set.errors %}
                     <div class="form-error">
-                        {% for error in form.complete_set.errors %}
+                        {% for error in form.is_complete_set.errors %}
                             <p>{{ error }}</p>
                         {% endfor %}
                     </div>
@@ -44,17 +44,17 @@
             
             <!-- Поле выбора маты -->
             <div class="form-group">
-                <label for="{{ form.mat.id_for_label }}">2. Wybierz matę:</label>
-                <select id="{{ form.mat.id_for_label }}" name="{{ form.mat.html_name }}" class="form-control">
-                    {% for value, display in form.mat.field.choices %}
-                        <option value="{{ value }}" {% if form.mat.value == value %}selected{% endif %}>
+                <label for="{{ form.material.id_for_label }}">2. Wybierz matę:</label>
+                <select id="{{ form.material.id_for_label }}" name="{{ form.material.html_name }}" class="form-control">
+                    {% for value, display in form.material.field.choices %}
+                        <option value="{{ value }}" {% if form.material.value == value %}selected{% endif %}>
                             {{ display }}
                         </option>
                     {% endfor %}
                 </select>
-                {% if form.mat.errors %}
+                {% if form.material.errors %}
                     <div class="form-error">
-                        {% for error in form.mat.errors %}
+                        {% for error in form.material.errors %}
                             <p>{{ error }}</p>
                         {% endfor %}
                     </div>

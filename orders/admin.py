@@ -5,6 +5,7 @@ from orders.models import Order, OrderItem
 # admin.site.register(Order)
 # admin.site.register(OrderItem)
 
+
 class OrderItemTabulareAdmin(admin.TabularInline):
     model = OrderItem
     fields = "product", "name", "price", "quantity"
@@ -57,9 +58,7 @@ class OrderAdmin(admin.ModelAdmin):
         "created_timestamp",
     )
 
-    search_fields = (
-        "id",
-    )
+    search_fields = ("id",)
     readonly_fields = ("created_timestamp",)
     list_filter = (
         "requires_delivery",

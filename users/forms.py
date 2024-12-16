@@ -1,5 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    UserCreationForm,
+    UserChangeForm,
+)
 
 from users.models import User
 
@@ -8,7 +12,7 @@ class UserLoginForm(AuthenticationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ["username", "password"]
 
     username = forms.CharField()
     password = forms.CharField()
@@ -26,6 +30,7 @@ class UserLoginForm(AuthenticationForm):
     #                                       'placeholder': 'Введите ваш пароль'})
     # )
 
+
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:
@@ -38,14 +43,13 @@ class UserRegistrationForm(UserCreationForm):
             "password1",
             "password2",
         )
-    
+
     first_name = forms.CharField()
     last_name = forms.CharField()
     username = forms.CharField()
     email = forms.CharField()
     password1 = forms.CharField()
     password2 = forms.CharField()
-
 
     # first_name = forms.CharField(
     #     widget=forms.TextInput(
@@ -96,6 +100,7 @@ class UserRegistrationForm(UserCreationForm):
     #     )
     # )
 
+
 class ProfileForm(UserChangeForm):
     class Meta:
         model = User
@@ -104,15 +109,14 @@ class ProfileForm(UserChangeForm):
             "first_name",
             "last_name",
             "username",
-            "email",)
+            "email",
+        )
 
     image = forms.ImageField(required=False)
     first_name = forms.CharField()
     last_name = forms.CharField()
     username = forms.CharField()
     email = forms.CharField()
-
-
 
     # image = forms.ImageField(
     #     widget=forms.FileInput(attrs={"class": "form-control mt-3"}), required=False

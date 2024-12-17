@@ -3,7 +3,7 @@
 <div class="card mb-3 text-bg-light shadow-lg">
     {% for cart in carts %}
         <div class="card-header">
-            <h5 class="card-title">{{ cart.product.name }} {{ cart.configuration.complete_set }}</h5>
+            <h5 class="card-title">{{ cart.product.name }} {{ cart.configuration.is_complete_set }}</h5>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">

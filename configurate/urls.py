@@ -7,5 +7,5 @@ from configurate import views
 app_name = "configurate"
 
 urlpatterns = [
-    path("configurate/", views.input_view, name="input_view"),
+    path("configurate/", views.create_product_configuration, name="input_view"),
 ]

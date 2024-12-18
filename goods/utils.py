@@ -1,11 +1,9 @@
-from django.db.models import Q
 from django.contrib.postgres.search import (
     SearchVector,
     SearchQuery,
     SearchRank,
     SearchHeadline,
 )
-
 from goods.models import Products
 
 
@@ -19,6 +17,7 @@ def q_search(query):
     result = (
         Products.objects.annotate(rank=SearchRank(vector, query))
         .filter(rank__gt=0)
+        .select_related("category")
         .order_by("-rank")
     )
 

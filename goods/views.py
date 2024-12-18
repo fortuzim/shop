@@ -1,6 +1,5 @@
 from django.http import Http404
 from django.views.generic import DetailView, ListView
-
 from goods.models import Products
 from goods.utils import q_search
 
@@ -37,7 +36,7 @@ class CatalogView(ListView):
             goods = goods.order_by(order_by)
 
         return goods
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Home - Каталог"
@@ -56,7 +55,6 @@ class ProductView(DetailView):
     def get_object(self, queryset=None):
         product = Products.objects.get(slug=self.kwargs.get(self.slug_url_kwarg))
         return product
-    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -70,7 +68,7 @@ class ProductView(DetailView):
 #     on_sale = request.GET.get('on_sale', None)
 #     order_by = request.GET.get('order_by', None)
 #     query = request.GET.get('q', None)
-    
+
 #     if category_slug == "all":
 #         goods = Products.objects.all()
 #     elif query:

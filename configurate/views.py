@@ -2,16 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from configurate.models import ProductConfiguration
 from configurate.forms import ProductConfigurationForm
-
-from configurate.choices import (
-    CAR_BRAND_CHOICES,
-    CAR_MODEL_CHOICES,
-    COMPLETE_SET_PRICES,
-    MAT_PRICES,
-)
+from configurate.choices import CAR_BRAND_CHOICES, CAR_MODEL_CHOICES
 
 
-def input_view(request):
+def create_product_configuration(request):
     if request.method == "POST":
         form = ProductConfigurationForm(request.POST)
         if form.is_valid():

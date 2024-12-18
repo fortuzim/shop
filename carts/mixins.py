@@ -5,7 +5,7 @@ from carts.utils import get_user_carts
 
 
 class CartMixin:
-    def get_cart(self, request, product=None, cart_id=None):
+    def get_cart(self, request, product=None, configuration=None, cart_id=None):
 
         if request.user.is_authenticated:
             query_kwargs = {"user": request.user}
@@ -14,6 +14,8 @@ class CartMixin:
 
         if product:
             query_kwargs["product"] = product
+        if configuration:
+            query_kwargs["configuration"] = configuration
         if cart_id:
             query_kwargs["id"] = cart_id
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.postgres.indexes import GinIndex
 
 
 class Categories(models.Model):
@@ -43,6 +44,11 @@ class Products(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ("id",)
+
+        indexes = [
+            GinIndex(fields=["name"]),
+            GinIndex(fields=["description"]),
+        ]
 
     def __str__(self):
         return f"{self.name} Количество - {self.quantity}"

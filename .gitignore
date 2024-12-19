@@ -3,6 +3,7 @@ myenv/
 .pylintrc
 __pycache__/
 cache/
+.env/
 
 #ide stuff
 .vscode

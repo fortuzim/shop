@@ -105,7 +105,9 @@ class UserProfileView(LoginRequiredMixin, CacheMixin, UpdateView):
             .prefetch_related(
                 Prefetch(
                     "orderitem_set",
-                    queryset=OrderItem.objects.select_related("product"),
+                    queryset=OrderItem.objects.select_related(
+                        "product", "configuration"
+                    ),
                 )
             )
             .order_by("-id")

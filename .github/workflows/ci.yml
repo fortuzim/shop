@@ -22,7 +22,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"
+          --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -36,14 +36,6 @@ jobs:
       with:
         python-version: '3.12.3'
 
-    - name: Cache Python dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -53,9 +45,24 @@ jobs:
       run: |
         echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
         echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
-        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+        echo "DATABASE_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
         echo "DB_HOST=postgres" >> $GITHUB_ENV
         echo "DB_PORT=5432" >> $GITHUB_ENV
+
+    - name: Debug environment variables
+      run: |
+        echo "DB_NAME=${DB_NAME}"
+        echo "DB_USER=${DB_USER}"
+        echo "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
+        echo "DB_HOST=${DB_HOST}"
+        echo "DB_PORT=${DB_PORT}"
+
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        until pg_isready -h postgres -p 5432 -U ${{ secrets.DB_USER }}; do
+          echo "Waiting for PostgreSQL..."
+          sleep 5
+        done
 
     - name: Run migrations
       run: python manage.py migrate

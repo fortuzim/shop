@@ -16,6 +16,7 @@ jobs:
       postgres:
         image: postgres:16.6
         env:
+<<<<<<< HEAD
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: test_db
@@ -29,21 +30,41 @@ jobs:
 
     env:
       DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/test_db
+=======
+          POSTGRES_USER: ziko
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: shopdjango
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+>>>>>>> 478ef39615f9e697b259720bbc260bb0fd3ec00a
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+<<<<<<< HEAD
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.12.3'
+=======
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12.3'
+>>>>>>> 478ef39615f9e697b259720bbc260bb0fd3ec00a
 
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
 
+<<<<<<< HEAD
       - name: Set up database
         run: |
           python3 manage.py makemigrations
@@ -60,3 +81,20 @@ jobs:
         run: docker-compose up -d --build
         
 
+=======
+    - name: Debug PostgreSQL logs
+      run: docker logs $(docker ps -q --filter ancestor=postgres:16.6)
+
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        until pg_isready -h postgres -p 5432 -U postgres; do
+          echo "Waiting for PostgreSQL..."
+          sleep 5
+        done
+
+    - name: Run migrations
+      run: python manage.py migrate
+
+    - name: Run tests
+      run: python manage.py test
+>>>>>>> 478ef39615f9e697b259720bbc260bb0fd3ec00a
